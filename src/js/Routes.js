@@ -1,4 +1,14 @@
 Ext.define('TualoOffice.routes.DS',{
+    statics: {
+        load: async function() {
+            return [
+                {
+                    name: 'votemanager',
+                    path: '#votemanager'
+                }
+            ]
+        }
+    }, 
     url: 'votemanager',
     handler: {
         action: function(type,tablename,id){
