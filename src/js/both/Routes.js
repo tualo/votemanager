@@ -20,12 +20,11 @@ Ext.define('TualoOffice.routes.DS',{
             if (typeof id!='undefined'){ 
                 opt.loadId=id;
             }
-            TualoOffice.getApplication().addView('Tualo.DataSets.'+type+'.'+tablenamecase,tablename,true,opt);
             */
+            Ext.getApplication().addView('Tualo.votemanager.Viewport');
         },
         before: function (type,tablename,xid,action) {
-            console.log(arguments);
-            // action.resume();
+            action.resume();
         }
     }
 });
