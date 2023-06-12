@@ -1,5 +1,5 @@
 <?php
-namespace Tualo\Office\TualoJS;
+namespace Tualo\Office\VoteManager;
 
 use Tualo\Office\ExtJSCompiler\ICompiler;
 use Tualo\Office\ExtJSCompiler\CompilerHelper;
