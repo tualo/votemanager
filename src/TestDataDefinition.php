@@ -11,19 +11,21 @@ class TestDataDefinition  extends PostCheck {
     public static function test(array $config){
         // print_r($config);
         $tables = [
+            /*
             'adressen'=>[
                 'columns'=>[
                     'name'=>'varchar(255)'
                 ]
             ],
             'ds'=>[],
+            */
             'voters'=>[
                 'columns'=>[
                     'stimmzettel'=>'varchar(10)'
                 ]
             ]
         ];
-        self::tableCheck($tables);
+        self::tableCheck('votemanager',$tables);
         /*
         $_SERVER['REQUEST_URI']='';
         $_SERVER['REQUEST_METHOD']='none';
