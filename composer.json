@@ -19,7 +19,7 @@
   },
   "minimum-stability": "dev",
   "require": {
-    "phpseclib/phpseclib": "*"
+    "phpseclib/phpseclib": "~3.0.46"
   },
-  "version": "1.0.2"
+  "version": "1.0.3"
 }
