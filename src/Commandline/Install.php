@@ -18,10 +18,11 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ddl/wzbruecklauffelder' => 'setup wzbruecklauffelder',
         'install/ds/wzbruecklauffelder.ds' => 'setup ds wzbruecklauffelder',
 
+        /*
         'install/ddl/wm_sync_tables' => 'setup wm_sync_tables',
         'install/ds/wm_sync_tables.ds' => 'setup ds wm_sync_tables',
         'install/data/wm_sync_tables.data' => 'setup data wm_sync_tables',
-
+        */
         'install/ddl/abgabetyp' => 'setup abgabetyp',
         'install/ds/abgabetyp.ds' => 'setup ds abgabetyp',
         'install/data/abgabetyp.data' => 'setup data abgabetyp',
