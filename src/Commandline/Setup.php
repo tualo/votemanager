@@ -6,7 +6,7 @@ use Garden\Cli\Cli;
 use Garden\Cli\Args;
 
 
-use Tualo\Office\CMS\Commands\Setup as BaseSetup;
+use Tualo\Office\DS\Commandline\Setup as BaseSetup;
 
 class Setup extends BaseSetup
 {

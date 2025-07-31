@@ -31,5 +31,45 @@ CREATE TABLE IF NOT EXISTS `wahlschein` (
   CONSTRAINT `fk_wahlschein_abgabetyp` FOREIGN KEY (`abgabetyp`) REFERENCES `abgabetyp` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_wahlschein_stimmzettel` FOREIGN KEY (`stimmzettel`) REFERENCES `stimmzettel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_wahlschein_wahlberechtigte` FOREIGN KEY (`wahlberechtigte`) REFERENCES `wahlberechtigte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_wahlschein_wahlscheinstatus` FOREIGN KEY (`wahlscheinstatus`) REFERENCES `wahlscheinstatus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ;
+  CONSTRAINT `fk_wahlschein_wahlscheinstatus` FOREIGN KEY (`wahlscheinstatus`) REFERENCES `wahlscheinstatus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_wahlschein_wahlscheinstatus_grund` FOREIGN KEY (`wahlscheinstatus_grund`) REFERENCES `wahlscheinstatus_grund` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) 
+WITH
+  SYSTEM VERSIONING;
+
+;
+
+
+
+DELIMITER // 
+
+CREATE
+OR REPLACE TRIGGER `trigger_wahlschein_bi_defaults` BEFORE INSERT ON `wahlschein` FOR EACH ROW BEGIN IF NEW.login IS NULL THEN
+SET
+  NEW.login = getSessionUser ();
+
+END IF;
+
+IF NEW.created_at IS NULL THEN
+SET
+  NEW.created_at = CURRENT_TIMESTAMP;
+
+END IF;
+
+END // 
+
+CREATE
+OR REPLACE TRIGGER `trigger_wahlschein_bu_defaults` BEFORE
+UPDATE ON `wahlschein` FOR EACH ROW BEGIN IF NEW.login IS NULL THEN
+SET
+  NEW.login = getSessionUser ();
+
+END IF;
+
+IF NEW.created_at IS NULL THEN
+SET
+  NEW.updated_at = CURRENT_TIMESTAMP;
+
+END IF;
+
+END //

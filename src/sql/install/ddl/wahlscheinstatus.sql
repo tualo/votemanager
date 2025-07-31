@@ -12,3 +12,29 @@ CREATE TABLE IF NOT EXISTS `wahlscheinstatus` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_wahlscheinstatus_barcode` (`barcode`)
 ) ;
+
+
+
+DELIMITER //
+
+CREATE OR REPLACE TRIGGER `trigger_wahlscheinstatus_bi_defaults`
+BEFORE INSERT ON `wahlscheinstatus` FOR EACH ROW
+BEGIN
+  IF NEW.login IS NULL THEN
+    SET NEW.login = getSessionUser();
+  END IF;
+  IF NEW.created_at IS NULL THEN
+    SET NEW.created_at = CURRENT_TIMESTAMP;
+  END IF;
+END //
+
+CREATE OR REPLACE TRIGGER `trigger_wahlscheinstatus_bu_defaults`
+BEFORE UPDATE ON `wahlscheinstatus` FOR EACH ROW
+BEGIN
+  IF NEW.login IS NULL THEN
+    SET NEW.login = getSessionUser();
+  END IF;
+  IF NEW.created_at IS NULL THEN
+    SET NEW.updated_at = CURRENT_TIMESTAMP;
+  END IF;
+END //

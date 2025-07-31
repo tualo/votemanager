@@ -9,3 +9,29 @@ CREATE TABLE IF NOT EXISTS  `wahlberechtigte` (
   PRIMARY KEY (`id`),
   KEY `idx_wahlberechtigte_identnummer` (`identnummer`)
 ) ;
+
+
+
+DELIMITER //
+
+CREATE OR REPLACE TRIGGER `trigger_wahlberechtigte_bi_defaults`
+BEFORE INSERT ON `wahlberechtigte` FOR EACH ROW
+BEGIN
+  IF NEW.login IS NULL THEN
+    SET NEW.login = getSessionUser();
+  END IF;
+  IF NEW.created_at IS NULL THEN
+    SET NEW.created_at = CURRENT_TIMESTAMP;
+  END IF;
+END //
+
+CREATE OR REPLACE TRIGGER `trigger_wahlberechtigte_bu_defaults`
+BEFORE UPDATE ON `wahlberechtigte` FOR EACH ROW
+BEGIN
+  IF NEW.login IS NULL THEN
+    SET NEW.login = getSessionUser();
+  END IF;
+  IF NEW.created_at IS NULL THEN
+    SET NEW.updated_at = CURRENT_TIMESTAMP;
+  END IF;
+END //

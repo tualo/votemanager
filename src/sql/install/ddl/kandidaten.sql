@@ -38,3 +38,28 @@ CREATE TABLE IF NOT EXISTS  `kandidaten` (
   KEY `fk_kandidaten_stimmzettelgruppen` (`stimmzettelgruppen`),
   CONSTRAINT `fk_kandidaten_stimmzettelgruppen` FOREIGN KEY (`stimmzettelgruppen`) REFERENCES `stimmzettelgruppen` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
+
+
+DELIMITER //
+
+CREATE OR REPLACE TRIGGER `trigger_kandidaten_bi_defaults`
+BEFORE INSERT ON `kandidaten` FOR EACH ROW
+BEGIN
+  IF NEW.login IS NULL THEN
+    SET NEW.login = getSessionUser();
+  END IF;
+  IF NEW.created_at IS NULL THEN
+    SET NEW.created_at = CURRENT_TIMESTAMP;
+  END IF;
+END //
+
+CREATE OR REPLACE TRIGGER `trigger_kandidaten_bu_defaults`
+BEFORE UPDATE ON `kandidaten` FOR EACH ROW
+BEGIN
+  IF NEW.login IS NULL THEN
+    SET NEW.login = getSessionUser();
+  END IF;
+  IF NEW.created_at IS NULL THEN
+    SET NEW.updated_at = CURRENT_TIMESTAMP;
+  END IF;
+END //

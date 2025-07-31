@@ -10,3 +10,12 @@ CREATE TABLE IF NOT EXISTS `onlinestimmzettel` (
   PRIMARY KEY (`stimmzettel`),
   CONSTRAINT `fk_onlinestimmzettel_stimmzettel` FOREIGN KEY (`stimmzettel`) REFERENCES `stimmzettel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 )  ;
+
+
+DELIMITER //
+CREATE OR REPLACE TRIGGER `trigger_stimmzettel_ai_onlinestimmzettel`
+AFTER INSERT ON `stimmzettel` FOR EACH ROW
+BEGIN
+  insert ignore into onlinestimmzettel(stimmzettel) values (new.id) ;
+END //
+
