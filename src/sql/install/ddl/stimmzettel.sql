@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS  `stimmzettel` (
   KEY `fk_stimmzettel_wahlgruppe` (`wahlgruppe`),
   KEY `fk_stimmzettel_wahlbezirk` (`wahlbezirk`),
   CONSTRAINT `fk_stimmzettel_wahlbezirk` FOREIGN KEY (`wahlbezirk`) REFERENCES `wahlbezirk` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_stimmzettel_wahlgruppe` FOREIGN KEY (`wahlgruppe`) REFERENCES `wahlgruppe` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_stimmzettel_wahlgruppe` FOREIGN KEY (`wahlgruppe`) REFERENCES `wahlgruppe` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_stimmzettel_wahltyp` FOREIGN KEY (`wahltyp`) REFERENCES `wahltyp` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 
