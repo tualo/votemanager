@@ -15,6 +15,10 @@ class Install extends CommandLineInstallSQL  implements ICommandline
     public static $files = [
         'install/ds_class' => 'setup ds_class',
 
+        'install/ddl/voting_state' => 'setup voting_state',
+        'install/data/voting_state.data' => 'setup data voting_state',
+
+
         'install/ddl/wzbruecklauffelder' => 'setup wzbruecklauffelder',
         'install/ds/wzbruecklauffelder.ds' => 'setup ds wzbruecklauffelder',
 
