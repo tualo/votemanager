@@ -266,4 +266,4 @@ INSERT
         `existsreal`
     )
 VALUES
-    ('administration', 'ds_files_data', 1, 0, 0, 0, 0);
+    ('administration', 'ds_files_data', 1, 1, 1, 1, 0);
