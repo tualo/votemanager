@@ -136,6 +136,10 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ds/wahlscheinstatus_online_erlaubt.ds' => 'setup ds wahlscheinstatus_online_erlaubt',
         'install/data/wahlscheinstatus_online_erlaubt.data' => 'setup data wahlscheinstatus_online_erlaubt',
 
+        'install/ddl/wm_sync_tables' => 'setup wm_sync_tables',
+        'install/ds/wm_sync_tables.ds' => 'setup ds wm_sync_tables',
+        'install/data/wm_sync_tables.data' => 'setup data wm_sync_tables',
+
 
         'install/proc/canChangeValue' => 'setup canChangeValue',
 

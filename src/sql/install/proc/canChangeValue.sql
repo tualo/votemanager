@@ -20,5 +20,8 @@ BEGIN
       SET lvl= TRUE;
     END IF;
   END IF;
+  if exists (select `group` from view_session_groups where `group` = 'administration') then
+    SET lvl= TRUE;
+  END IF;
   RETURN (lvl);
 END //
