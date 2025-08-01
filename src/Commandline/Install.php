@@ -143,5 +143,11 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
         'install/proc/canChangeValue' => 'setup canChangeValue',
 
+        'install/ddl/ds_files' => 'setup ds_files',
+        'install/ds/ds_files.ds' => 'setup ds ds_files',
+
+
+        'install/ddl/ds_files_data' => 'setup ds_files_data',
+        'install/ds/ds_files_data.ds' => 'setup ds ds_files_data',
     ];
 }

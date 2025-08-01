@@ -23,3 +23,4 @@ INSERT
     )
 VALUES
     ('administration', 'wm_sync_tables', 1, 1, 1, 1, 0);
+
