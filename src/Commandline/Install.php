@@ -18,6 +18,18 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ddl/voting_state' => 'setup voting_state',
         'install/data/voting_state.data' => 'setup data voting_state',
 
+        'install/ddl/system_settings' => 'setup system_settings',
+        'install/ds/system_settings.ds' => 'setup ds system_settings',
+
+
+        'install/ddl/system_settings_suggestion' => 'setup system_settings_suggestion',
+        'install/ds/system_settings_suggestion.ds' => 'setup ds system_settings_suggestion',
+
+
+        'install/ddl/system_settings_user_access' => 'setup system_settings_user_access',
+        'install/ds/system_settings_user_access.ds' => 'setup ds system_settings_user_access',
+        'install/data/system_settings_user_access.data' => 'setup data system_settings_user_access',
+
 
         'install/ddl/wzbruecklauffelder' => 'setup wzbruecklauffelder',
         'install/ds/wzbruecklauffelder.ds' => 'setup ds wzbruecklauffelder',
