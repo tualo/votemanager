@@ -110,6 +110,8 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
         'install/ddl/kandidaten' => 'setup kandidaten',
         'install/ddl/kandidaten_bilder' => 'setup kandidaten_bilder',
+        'install/ds/kandidaten_bilder.ds' => 'setup kandidaten_bilder.ds',
+
         'install/views/view_kandidaten_sitze_vergeben' => 'setup view_kandidaten_sitze_vergeben',
         'install/views/view_readtable_kandidaten' => 'setup view_readtable_kandidaten',
         'install/ds/kandidaten.ds' => 'setup ds kandidaten',
