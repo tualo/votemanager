@@ -145,6 +145,11 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
         'install/proc/canChangeValue' => 'setup canChangeValue',
 
+        'install/ddl/wahlschein_blocknumbers' => 'setup wahlschein_blocknumbers',
+        'install/ds/wahlschein_blocknumbers.ds' => 'setup ds wahlschein_blocknumbers',
+
+        'install/ddl/before_insert_wahlberechtigte_anlage' => 'setup before_insert_wahlberechtigte_anlage',
+
         'install/ddl/ds_files' => 'setup ds_files',
         'install/ds/ds_files.ds' => 'setup ds ds_files',
 
