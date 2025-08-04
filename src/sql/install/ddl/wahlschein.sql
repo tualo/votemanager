@@ -32,13 +32,10 @@ CREATE TABLE IF NOT EXISTS `wahlschein` (
     CONSTRAINT `fk_wahlschein_wahlberechtigte` FOREIGN KEY (`wahlberechtigte`) REFERENCES `wahlberechtigte` (`id`) ON DELETE restrict ON UPDATE CASCADE,
     CONSTRAINT `fk_wahlschein_wahlscheinstatus` FOREIGN KEY (`wahlscheinstatus`) REFERENCES `wahlscheinstatus` (`id`) ON DELETE restrict ON UPDATE CASCADE,
     CONSTRAINT `fk_wahlschein_abgabetyp` FOREIGN KEY (`abgabetyp`) REFERENCES `abgabetyp` (`id`) ON DELETE restrict ON UPDATE CASCADE,
-    CONSTRAINT `fk_wahlschein_blocknumber` FOREIGN KEY (`blocknumber`) REFERENCES `wahlschein_blocknumbers` (`blocknumber`) ON DELETE restrict ON UPDATE CASCADE,
+    CONSTRAINT `fk_wahlschein_blocknumber` FOREIGN KEY (`blocknumber`) REFERENCES `wahlschein_blocknumbers` (`blocknumber`) ON DELETE restrict ON UPDATE CASCADE
 ) 
 WITH
   SYSTEM VERSIONING;
-
-;
-
 
 
 DELIMITER // 
