@@ -150,11 +150,22 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
         'install/ddl/before_insert_wahlberechtigte_anlage' => 'setup before_insert_wahlberechtigte_anlage',
 
-        'install/ddl/ds_files' => 'setup ds_files',
-        'install/ds/ds_files.ds' => 'setup ds ds_files',
+
+        'install/view/view_kandidaten_stimmenanzahl' => 'setup view_kandidaten_stimmenanzahl',
+        'install/ds/view_kandidaten_stimmenanzahl.ds' => 'setup ds view_kandidaten_stimmenanzahl',
+
+        'install/view/view_protokoll_erwartet' => 'setup view_protokoll_erwartet',
+        'install/ds/view_protokoll_erwartet.ds' => 'setup ds view_protokoll_erwartet',
+
+
 
 
         'install/ddl/ds_files_data' => 'setup ds_files_data',
         'install/ds/ds_files_data.ds' => 'setup ds ds_files_data',
+
+        'install/ddl/ds_files' => 'setup ds_files',
+        'install/ds/ds_files.ds' => 'setup ds ds_files',
+
+
     ];
 }

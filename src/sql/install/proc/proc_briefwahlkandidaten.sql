@@ -76,6 +76,16 @@ BEGIN
 
 
 
+        -- insert if not exists
+        -- eg for only papervotes
+        insert ignore into `onlinekandidaten`  (
+                `id`,
+                `login`,
+                `anzahl`
+        ) select id,getSessionUser() AS `login`,0 from kandidaten;
+
+
+
 
         -- ------------------------------------------- ------------------------------------------- -------------------------------------------
 
@@ -89,8 +99,14 @@ BEGIN
         select 
             stimmzettel,
             count(*) erwartet,
-            getSessionUser() AS `login` from wahlschein where wahlscheinstatus = 2 and abgabetyp=1 group by stimmzettel
-        on duplicate key update `erwartet`=values(`erwartet`),`login`=values(`login`)
+            getSessionUser() AS `login` 
+        from 
+            wahlschein 
+        where 
+            wahlscheinstatus = 2 
+            and abgabetyp=1 
+        group by stimmzettel
+            on duplicate key update `erwartet`=values(`erwartet`),`login`=values(`login`)
         ;
 
         insert into `onlinestimmzettel`
