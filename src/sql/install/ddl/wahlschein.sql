@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS `wahlschein` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`,`stimmzettel`),
+  
   KEY `idx_wahlschein_wahlscheinstatus` (`wahlscheinstatus`),
   KEY `idx_wahlschein_wahlscheinstatus_grund` (`wahlscheinstatus_grund`),
   KEY `idx_wahlschein_wahlberechtigte` (`wahlberechtigte`),

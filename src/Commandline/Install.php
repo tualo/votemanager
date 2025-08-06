@@ -21,6 +21,9 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ddl/system_settings' => 'setup system_settings',
         'install/ds/system_settings.ds' => 'setup ds system_settings',
 
+        'install/ddl/votemanager_setup' => 'setup votemanager_setup',
+        'install/ds/votemanager_setup.ds' => 'setup ds votemanager_setup',
+
 
         'install/ddl/system_settings_suggestion' => 'setup system_settings_suggestion',
         'install/ds/system_settings_suggestion.ds' => 'setup ds system_settings_suggestion',
@@ -109,12 +112,14 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/data/kandidaten_bilder_typen.data' => 'setup data kandidaten_bilder_typen',
 
         'install/ddl/kandidaten' => 'setup kandidaten',
-        'install/view/view_readtable_kandidaten' => 'setup view_readtable_kandidaten',
         'install/ddl/kandidaten_bilder' => 'setup kandidaten_bilder',
+
+        'install/view/view_kandidaten_sitze_vergeben' => 'setup view_kandidaten_sitze_vergeben',
+        'install/view/view_readtable_kandidaten' => 'setup view_readtable_kandidaten',
+
         'install/view/view_readtable_kandidaten_bilder' => 'setup view_readtable_kandidaten_bilder',
         'install/ds/kandidaten_bilder.ds' => 'setup kandidaten_bilder.ds',
 
-        'install/view/view_kandidaten_sitze_vergeben' => 'setup view_kandidaten_sitze_vergeben',
         'install/ds/kandidaten.ds' => 'setup ds kandidaten',
 
         'install/ddl/onlinekandidaten' => 'setup onlinekandidaten',
@@ -127,6 +132,7 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
 
 
+        'install/ddl/wahlschein_blocknumbers' => 'setup wahlschein_blocknumbers',
         'install/ddl/wahlschein' => 'setup wahlschein',
         'install/ds/wahlschein.ds' => 'setup ds wahlschein',
 
@@ -146,9 +152,9 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
         'install/proc/canChangeValue' => 'setup canChangeValue',
 
-        'install/ddl/wahlschein_blocknumbers' => 'setup wahlschein_blocknumbers',
         // 'install/ds/wahlschein_blocknumbers.ds' => 'setup ds wahlschein_blocknumbers',
 
+        'install/ddl/wahlberechtigte_anlage' => 'setup wahlberechtigte_anlage',
         'install/ddl/before_insert_wahlberechtigte_anlage' => 'setup before_insert_wahlberechtigte_anlage',
 
 
