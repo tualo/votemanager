@@ -1,0 +1,15 @@
+extends printable_page
+block append config
+    - pageTitle="Mein Text ABC"
+
+block pageheader
+    h1 Mein Header
+block pagefooter
+    include wm_berichte_wrapper_stand
+
+
+block append css
+    include printable_page_css_page_numbers
+
+block  pagecontent
+    // mein inhalt

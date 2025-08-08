@@ -1,0 +1,34 @@
+doctype html
+block config
+    - var pageHeaderHeight = "3cm";
+    - var pageFooterHeight = "2cm";
+    - var pageTitle = "Page Title";
+    - var pageFormat = "A4";
+    - var pageOrientation = "portrait";
+    - var pageRightMargin = "1.5cm";
+    - var pageLeftMargin = "2.0cm";
+    
+    
+html(lang='de')
+    head
+        include printable_page_css
+        meta(charset='utf-8')
+        title=pageTitle
+    body
+        .pagetemplate
+            table
+                thead
+                    tr
+                        th &nbsp;
+                tbody
+                    tr
+                        td
+                            block pagecontent
+                tfoot
+                    tr
+                        td &nbsp; 
+        .header
+            block pageheader
+        .footer
+            block pagefooter
+                span "nicht gesetzt"

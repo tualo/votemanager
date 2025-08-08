@@ -1,0 +1,57 @@
+block css 
+    style.
+        
+        @page {
+            size: !{pageFormat};
+            page-orientation: !{pageOrientation};
+            margin: 0;
+            margin-bottom: 1.2cm;
+            margin-right: 1.2cm;
+            
+        }
+        
+
+        body{
+            margin-left: !{pageLeftMargin};
+            margin-right: !{pageRightMargin};
+        }
+
+        
+        * {
+            font-family: sans-serif;
+        }
+
+        table tbody tr {
+            page-break-inside: auto !important;
+        }
+        
+        .pagetemplate table thead {
+            height: !{pageHeaderHeight};
+            display: table-header-group;
+            border: 0px solid green;
+        }
+
+        .pagetemplate table tfoot {
+            display: table-footer-group;
+            height: !{pageFooterHeight};
+            border: 0px solid rgb(15, 40, 15);
+        }
+
+      
+        .footer {
+            position: fixed;
+            height: !{pageFooterHeight};
+            bottom: 1.2cm;
+            left: !{pageLeftMargin};
+            right:!{pageRightMargin};
+        }
+
+        .header {
+            position: fixed;
+            height:!{pageHeaderHeight};
+            top: 0px;
+            left: !{pageLeftMargin};
+            right: !{pageRightMargin};
+        }
+
+        
