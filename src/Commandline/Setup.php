@@ -22,6 +22,7 @@ class Setup extends BaseSetup
             ...$parentCommands,
 
             'install-sql-votemanager',
+            'install-sql-pug-printable-page',
 
         ];
     }
