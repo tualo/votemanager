@@ -171,6 +171,12 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ds/wm_berichte.ds' => 'setup ds wm_berichte',
         'install/data/wm_berichte.data' => 'setup data wm_berichte',
         'install/data/wm_berichte.pug' => 'setup data wm_berichte PUG ',
+        'install/data/wm_berichte_header.pug' => 'setup data wm_berichte_header PUG ',
+        'install/data/wm_berichte_abschlussbericht.pug' => 'setup data wm_berichte_abschlussbericht PUG ',
+
+
+        'install/ds/view_wm_berichte_formats.ds' => 'setup ds',
+        'install/ds/view_wm_berichte_page_orientations.ds' => 'setup ds view_wm_berichte_page_orientations',
 
 
         'install/ddl/ds_files_data' => 'setup ds_files_data',
