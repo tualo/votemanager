@@ -18,5 +18,5 @@ INSERT IGNORE INTO `ds_column_form_label` (`active`,`allowempty`,`column_name`,`
 INSERT IGNORE INTO `ds_column_form_label` (`active`,`allowempty`,`column_name`,`field_path`,`flex`,`hidden`,`label`,`language`,`position`,`table_name`,`xtype`) VALUES ('1','0','page_show_pagenumbers','Allgemein/Angaben','1','0','Seitenzahlen','DE','3','wm_berichte','checkbox') ; 
 INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`role`,`table_name`,`write`) VALUES ('0','0','0','_default_','wm_berichte','0') ; 
 INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`role`,`table_name`,`write`) VALUES ('1','1','1','administration','wm_berichte','1') ; 
-INSERT IGNORE INTO `ds_renderer` (`label`,`orientation`,`pug_template`,`table_name`,`useremote`) VALUES ('Bericht','','wm_berichte','wm_berichte','1') ; 
+replace INTO `ds_renderer` (`label`,`orientation`,`pug_template`,`table_name`,`useremote`) VALUES ('Bericht','','wm_berichte','wm_berichte','1') ; 
 SET FOREIGN_KEY_CHECKS=1;
