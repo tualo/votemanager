@@ -3,7 +3,7 @@ delimiter ;
 
 
 CREATE TABLE IF NOT EXISTS wm_nachzaehlung_wahlschein_wahlberechtigte(
-    `wahlberechtigte` varchar(14) NOT NULL,
+    `wahlberechtigte` bigint(20) NOT NULL,
     `wahlscheinstatus` int(11) DEFAULT 1,
     `abgabetyp` int(11) DEFAULT 0,
     primary key (`wahlberechtigte`, `wahlscheinstatus`, `abgabetyp`),
