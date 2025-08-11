@@ -5,7 +5,7 @@ insert ignore into `wahlscheinstatus` (`id`, `name`, `aktiv`, `barcode`, `farbe`
 ('-1','mit TAN entsperrt','0','FC999999','rgb(111,111,111)','0','setup'),
 ('1','unbekannt','0','FC212','rgb(111,111,111)','0','setup'),
 ('2','angenommen','1','FC210','#20ff20','0','setup'),
-('3','ungültig','1','FC213','#ff2020','0','setup'),
+('3','abgewiesen','1','FC213','#ff2020','0','setup'),
 ('4','zurückgewiesen','1','FC215','#080808','0','setup'),
 ('5','unzustellbar','0','FC214','#2020ff','0','setup'),
 ('7','neue Wahlunterlagen generiert','0','FC9999','rgb(111,111,111)','0','setup'),

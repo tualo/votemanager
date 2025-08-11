@@ -186,5 +186,12 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ds/ds_files.ds' => 'setup ds ds_files',
 
 
+        'install/ddl/wm_nachzaehlung_wahlschein_wahlscheinnummer' => 'setup wm_nachzaehlung_wahlschein_wahlscheinnummer',
+        'install/ds/wm_nachzaehlung_wahlschein_wahlscheinnummer.ds' => 'setup ds wm_nachzaehlung_wahlschein_wahlscheinnummer',
+
+        'install/ddl/wm_nachzaehlung_wahlschein_wahlberechtigte' => 'setup wm_nachzaehlung_wahlschein_wahlberechtigte',
+        'install/ds/wm_nachzaehlung_wahlschein_wahlberechtigte.ds' => 'setup ds wm_nachzaehlung_wahlschein_wahlberechtigte',
+
+
     ];
 }
