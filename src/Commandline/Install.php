@@ -72,6 +72,7 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
 
         'install/ddl/briefwahlstimmzettel' => 'setup briefwahlstimmzettel',
+        'install/ds/briefwahlstimmzettel.ds' => 'ds briefwahlstimmzettel',
         'install/ddl/onlinestimmzettel' => 'setup onlinestimmzettel',
 
 
@@ -192,6 +193,35 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ddl/wm_nachzaehlung_wahlschein_wahlberechtigte' => 'setup wm_nachzaehlung_wahlschein_wahlberechtigte',
         'install/ds/wm_nachzaehlung_wahlschein_wahlberechtigte.ds' => 'setup ds wm_nachzaehlung_wahlschein_wahlberechtigte',
 
+
+
+        'install/view/view_wahlbeteiligung_base' => 'setup view_wahlbeteiligung_base',
+
+        'install/proc/create_involvement_pivot' => 'setup create_involvement_pivot',
+
+
+        'install/ddl/wahlbeteiligung_bericht' => 'setup wahlbeteiligung_bericht',
+        'install/ds/wahlbeteiligung_bericht.ds' => 'setup ds wahlbeteiligung_bericht',
+        'install/data/wahlbeteiligung_bericht.data' => 'setup data wahlbeteiligung_bericht',
+
+        'install/ddl/wahlbeteiligung_bericht_status' => 'setup wahlbeteiligung_bericht_status',
+        'install/ds/wahlbeteiligung_bericht_status.ds' => 'setup ds wahlbeteiligung_bericht_status',
+        'install/data/wahlbeteiligung_bericht_status.data' => 'setup data wahlbeteiligung_bericht_status',
+
+        'install/ddl/wahlbeteiligung_bericht_formel' => 'setup wahlbeteiligung_bericht_formel',
+        'install/ds/wahlbeteiligung_bericht_formel.ds' => 'setup ds wahlbeteiligung_bericht_formel',
+        'install/data/wahlbeteiligung_bericht_formel.data' => 'setup data wahlbeteiligung_bericht_formel',
+
+
+
+        'install/ddl/wahlbeteiligung_bericht_formel_nenner' => 'setup wahlbeteiligung_bericht_formel_nenner',
+        'install/ds/wahlbeteiligung_bericht_formel_nenner.ds' => 'setup ds wahlbeteiligung_bericht_formel_nenner',
+        'install/data/wahlbeteiligung_bericht_formel_nenner.data' => 'setup data wahlbeteiligung_bericht_formel_nenner',
+
+
+        'install/ddl/wahlbeteiligung_bericht_formel_teiler' => 'setup wahlbeteiligung_bericht_formel_teiler',
+        'install/ds/wahlbeteiligung_bericht_formel_teiler.ds' => 'setup ds wahlbeteiligung_bericht_formel_teiler',
+        'install/data/wahlbeteiligung_bericht_formel_teiler.data' => 'setup data wahlbeteiligung_bericht_formel_teiler',
 
     ];
 }

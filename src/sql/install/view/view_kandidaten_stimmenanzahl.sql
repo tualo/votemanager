@@ -4,9 +4,6 @@ DELIMITER;
 create or replace view `view_kandidaten_stimmenanzahl` as
 
 
-
-
-
 with basedata_szg as (
 select
     dense_rank() over (

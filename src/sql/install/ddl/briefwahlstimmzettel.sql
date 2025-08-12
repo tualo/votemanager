@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `briefwahlstimmzettel` (
 alter table `briefwahlstimmzettel` add column if not exists `enthaltung` int(11) DEFAULT 0;
 alter table `briefwahlstimmzettel` add column if not exists `ungueltig` int(11) DEFAULT 0;
 
+alter table `briefwahlstimmzettel` add column if not exists `ohne_wahlschein` int(11) DEFAULT 0;
 
 DELIMITER //
 
