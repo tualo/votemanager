@@ -22,6 +22,8 @@ select
     max(briefwahlstimmzettel_anzahl) as briefwahlstimmzettel_anzahl,
 
 
+    sum(gesamtstimmen) as gesamtstimmen,
+
     (max(onlinestimmzettel_anzahl) +  max(onlinestimmzettel_enthaltung) +  max(onlinestimmzettel_ungueltig) )/    max(onlinestimmzettel_erwartet) `onlinewahl_quote`,
     (max(briefwahlstimmzettel_anzahl) +  max(briefwahlstimmzettel_enthaltung) +  max(briefwahlstimmzettel_ungueltig) )/    max(briefwahlstimmzettel_erwartet) `briefwahl_quote`,
 

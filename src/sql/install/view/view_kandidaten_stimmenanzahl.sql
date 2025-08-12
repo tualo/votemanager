@@ -5,6 +5,8 @@ create or replace view `view_kandidaten_stimmenanzahl` as
 
 
 
+
+
 with basedata_szg as (
 select
     dense_rank() over (
@@ -162,6 +164,9 @@ setup as (
         stimmzettel_rang use_rang,
         stimmzettel_name use_name,
         stimmzettel_sitze use_sitze,
+
+        row_number() over (partition by stimmzettel_id order by barcode) listenplatz,
+        
         row_number() over (partition by stimmzettel_id order by stimmzettel_rang,id) rn,
         row_number() over (partition by stimmzettel_id order by stimmzettel_rang,id)<=stimmzettel_sitze as gewaehlt,
         basedata.*
@@ -175,6 +180,8 @@ setup as (
         stimmzettelgruppen_rang use_rang,
         stimmzettelgruppen_name use_name,
         stimmzettelgruppen_sitze use_sitze,
+
+        row_number() over (partition by stimmzettelgruppen_id order by barcode) listenplatz,
 
         row_number() over (partition by stimmzettelgruppen_id order by stimmzettelgruppen_rang,id) rn,
         row_number() over (partition by stimmzettelgruppen_id order by stimmzettelgruppen_rang,id)<=stimmzettelgruppen_sitze as gewaehlt,
