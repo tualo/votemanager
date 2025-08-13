@@ -9,3 +9,4 @@ CREATE TABLE IF NOT EXISTS `wahlbeteiligung_bericht` (
   KEY `idx_wahlbeteiligung_bericht_name` (`name`)
 ) ;
 
+

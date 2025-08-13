@@ -14,59 +14,52 @@ CREATE OR REPLACE PROCEDURE create_involvement_pivot(
 BEGIN
 
 
+    DECLARE _sql_aggregate  TEXT;
+    DECLARE _sql_view  TEXT;
 
+    SET _sql_aggregate = '';
+    for wahlbeteiligung_bericht in 
+        (select concat("wb_",wahlbeteiligung_bericht.id) val,wahlbeteiligung_bericht.id  from wahlbeteiligung_bericht where aktiv = 1)
+    do
+        if _sql_aggregate <> '' then
+            SET _sql_aggregate = concat(_sql_aggregate, ',\n');
+        end if;
 
-
-    -- Find the distinct values
-    -- Build the SUM()s
-    /*
-    SET @subq = CONCAT('SELECT DISTINCT ', pivot_col, ' AS val ',
-                    ' FROM ', tbl_name, ' ', where_clause, ' ORDER BY 1');
-*/
-    SET @subq = CONCAT('   select 
-            concat("wb_",wahlbeteiligung_bericht.id) as val
-    from 
-        wahlbeteiligung_bericht
-    where aktiv = 1');
-
-    -- select @subq;
-
-    SET @cc1 = "CONCAT('SUM(IF(&p = ', &v, ', &t, 0)) AS ', &v)";
-    SET @cc2 = REPLACE(@cc1, '&p', pivot_col);
-    SET @cc3 = REPLACE(@cc2, '&t', tally_col);
-    -- select @cc2, @cc3;
-    SET @qval = CONCAT("'\"', val, '\"'");
-    -- select @qval;
-    SET @cc4 = REPLACE(@cc3, '&v', @qval);
-    -- select @cc4;
-
-    SET SESSION group_concat_max_len = 10000;   -- just in case
-    SET @stmt = CONCAT(
-            'SELECT  GROUP_CONCAT(', @cc4, ' SEPARATOR ",\n")  INTO @sums',
-            ' FROM ( ', @subq, ' ) AS top');
-
-    PREPARE _sql FROM @stmt;
-    EXECUTE _sql;                      -- Intermediate step: build SQL for columns
-    DEALLOCATE PREPARE _sql;
-    -- Construct the query and perform it
-    SET @stmt2 = CONCAT(
-            'create or replace view `', tbl_name, '_pivot` as SELECT ',
-                base_cols, ',\n',
-                @sums,
-                -- ',\n SUM(', tally_col, ') AS Total'
-            '\n FROM ', tbl_name, ' ',
-            where_clause,
-            ' GROUP BY ', base_cols,
-            -- '\n WITH ROLLUP',
-            '\n', order_by
+        SET _sql_aggregate = concat(_sql_aggregate, 
+            'SUM(IF(', pivot_col, ' = "', wahlbeteiligung_bericht.val, '", ', tally_col, ', 0)) AS `', wahlbeteiligung_bericht.val, '`'
         );
+
+        for wahlbeteiligung_bericht_abgabetyp in 
+        (select concat("wb_",wahlbeteiligung_bericht_abgabetyp.bericht_id,'_',wahlbeteiligung_bericht_abgabetyp.abgabetyp) val,wahlbeteiligung_bericht_abgabetyp.bericht_id  from wahlbeteiligung_bericht_abgabetyp where  aktiv = 1 and wahlbeteiligung_bericht_abgabetyp.bericht_id = wahlbeteiligung_bericht.id)
+        do
+
+            if _sql_aggregate <> '' then
+                SET _sql_aggregate = concat(_sql_aggregate, ',\n');
+            end if;
+            SET _sql_aggregate = concat(_sql_aggregate, 
+                'SUM(IF(', pivot_col, ' = "', wahlbeteiligung_bericht_abgabetyp.val, '", ', tally_col, ', 0)) AS `', wahlbeteiligung_bericht_abgabetyp.val, '`'
+            );
+        end for;
+
+    end for;
+
+    SET _sql_view = CONCAT(
+        'create or replace view `', tbl_name, '_pivot` as SELECT ',
+            base_cols, ',\n',
+            _sql_aggregate,
+            -- ',\n SUM(', tally_col, ') AS Total'
+        '\n FROM ', tbl_name, ' ',
+        where_clause,
+        ' GROUP BY ', base_cols,
+        -- '\n WITH ROLLUP',
+        '\n', order_by
+    );
     
 
-
-    PREPARE _sql FROM @stmt2;
+    PREPARE _sql FROM _sql_view;
     EXECUTE _sql;                     -- The resulting pivot table ouput
     DEALLOCATE PREPARE _sql;
-    -- For debugging / tweaking, SELECT the various @variables after CALLing.
+
 END //
 
 

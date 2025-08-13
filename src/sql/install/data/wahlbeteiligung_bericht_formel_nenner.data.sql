@@ -1,6 +1,6 @@
 delimiter ;
 
-INSERT INTO `wahlbeteiligung_bericht_formel_nenner` 
+INSERT IGNORE INTO `wahlbeteiligung_bericht_formel_nenner` 
 
 (`id`, `login`, `aktiv`, `name`, `wahlbeteiligung_bericht_formel`, `wahlbeteiligung_bericht`) VALUES (1,'setup','1','',1,4),
 (2,'setup','1','',2,4),

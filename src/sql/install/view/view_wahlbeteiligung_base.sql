@@ -134,5 +134,26 @@ wstest as (
                 on wahlbeteiligung_bericht.id = wahlbeteiligung_bericht_status.wahlbeteiligung_bericht
                 and wahlbeteiligung_bericht.aktiv = 1
 
+    union all 
+
+    select 
+        wahlscheinstatus.name wahlscheinstatus_name,
+        wahlbeteiligung_bericht.name top_col_name,
+        concat('wb_',wahlbeteiligung_bericht.id,'_',wahlbeteiligung_bericht_abgabetyp.abgabetyp) top_col_id,
+        basedata.*
+    from 
+        wahlscheinstatus
+        join basedata on basedata.wahlscheinstatus = wahlscheinstatus.id
+        join wahlbeteiligung_bericht_status
+                on wahlbeteiligung_bericht_status.wahlscheinstatus = basedata.wahlscheinstatus
+                and wahlbeteiligung_bericht_status.aktiv = 1
+        join wahlbeteiligung_bericht
+                on wahlbeteiligung_bericht.id = wahlbeteiligung_bericht_status.wahlbeteiligung_bericht
+                and wahlbeteiligung_bericht.aktiv = 1
+        join wahlbeteiligung_bericht_abgabetyp
+                on wahlbeteiligung_bericht_abgabetyp.bericht_id = wahlbeteiligung_bericht.id
+                and wahlbeteiligung_bericht_abgabetyp.aktiv = 1
+                and basedata.abgabetyp = wahlbeteiligung_bericht_abgabetyp.abgabetyp
+
 )
 select * from wstest;

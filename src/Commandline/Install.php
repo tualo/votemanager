@@ -204,6 +204,10 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ds/wahlbeteiligung_bericht.ds' => 'setup ds wahlbeteiligung_bericht',
         'install/data/wahlbeteiligung_bericht.data' => 'setup data wahlbeteiligung_bericht',
 
+        'install/ddl/wahlbeteiligung_bericht_abgabetyp' => 'setup wahlbeteiligung_bericht_abgabetyp',
+        'install/ds/wahlbeteiligung_bericht_abgabetyp.ds' => 'setup ds wahlbeteiligung_bericht_abgabetyp',
+        'install/data/wahlbeteiligung_bericht_abgabetyp.data' => 'setup data wahlbeteiligung_bericht_abgabetyp',
+
         'install/ddl/wahlbeteiligung_bericht_status' => 'setup wahlbeteiligung_bericht_status',
         'install/ds/wahlbeteiligung_bericht_status.ds' => 'setup ds wahlbeteiligung_bericht_status',
         'install/data/wahlbeteiligung_bericht_status.data' => 'setup data wahlbeteiligung_bericht_status',

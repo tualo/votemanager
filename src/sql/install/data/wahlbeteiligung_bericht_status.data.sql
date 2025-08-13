@@ -1,5 +1,5 @@
 delimiter ;
-INSERT INTO `wahlbeteiligung_bericht_status` (`wahlbeteiligung_bericht`, `wahlscheinstatus`, `aktiv`) VALUES (1,-1,1),
+INSERT IGNORE INTO `wahlbeteiligung_bericht_status` (`wahlbeteiligung_bericht`, `wahlscheinstatus`, `aktiv`) VALUES (1,-1,1),
 (1,1,1),
 (1,2,1),
 (1,3,1),

@@ -1,5 +1,5 @@
 delimiter ;
-INSERT INTO `wahlbeteiligung_bericht` (`id`, `aktiv`, `checktyp`, `name`, `abgabetyp`) VALUES (1,1,0,'Wähler','{\"abgabetyp1\":true,\"abgabetyp2\":true}'),
+INSERT IGNORE INTO `wahlbeteiligung_bericht` (`id`, `aktiv`, `checktyp`, `name`, `abgabetyp`) VALUES (1,1,0,'Wähler','{\"abgabetyp1\":true,\"abgabetyp2\":true}'),
 (2,1,0,'Unzustellbar','{\"abgabetyp1\":true,\"abgabetyp2\":true}'),
 (3,1,0,'Bereinigt','{\"abgabetyp1\":true,\"abgabetyp2\":true}'),
 (4,1,1,'Angenommen','{\"abgabetyp1\":true,\"abgabetyp2\":true}'),
