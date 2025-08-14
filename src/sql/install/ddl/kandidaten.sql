@@ -27,10 +27,13 @@ CREATE TABLE IF NOT EXISTS  `kandidaten` (
   `geschlecht` varchar(5) DEFAULT NULL,
   `anrede` varchar(100) DEFAULT '',
   `branche` varchar(255) DEFAULT NULL,
-  `kooptiert` tinyint(4) DEFAULT 0,
-  `losnummer_stimmzettelgruppe` int(11) DEFAULT 0,
-  `losnummer` int(11) DEFAULT 0,
-  `ist_gewaehlt` tinyint(4) DEFAULT 0,
+
+  `kooptiert` tinyint(4) not null DEFAULT 0,
+  `losnummer_stimmzettelgruppe` int(11) not null DEFAULT 0,
+  `losnummer` int(11) not null DEFAULT 0,
+  
+  `ist_gewaehlt` tinyint(4) not null DEFAULT 0,
+  
   `login` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
