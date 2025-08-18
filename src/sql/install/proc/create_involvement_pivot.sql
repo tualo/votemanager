@@ -51,7 +51,7 @@ BEGIN
         '\n FROM ', tbl_name, ' ',
         where_clause,
         ' GROUP BY ', base_cols,
-        -- '\n WITH ROLLUP',
+        '\n WITH ROLLUP',
         '\n', order_by
     );
     

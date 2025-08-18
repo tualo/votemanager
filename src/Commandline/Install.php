@@ -227,5 +227,9 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ds/wahlbeteiligung_bericht_formel_teiler.ds' => 'setup ds wahlbeteiligung_bericht_formel_teiler',
         'install/data/wahlbeteiligung_bericht_formel_teiler.data' => 'setup data wahlbeteiligung_bericht_formel_teiler',
 
+
+        'install/ddl/votemanager_setup_involvement_types' => 'setup votemanager_setup_involvement_types',
+        'install/ds/votemanager_setup_involvement_types.ds' => 'setup ds votemanager_setup_involvement_types',
+
     ];
 }
