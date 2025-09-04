@@ -1,8 +1,13 @@
 DELIMITER //
+
+
+
+
 CREATE TABLE IF NOT EXISTS `voting_state` (
     id integer(11) NOT NULL,
     constraint check(id = 1),
     phase enum('setup_phase', 'test_phase', 'production_phase','council_phase') NOT NULL,
+    constraint `fk_voting_state_id` foreign key (id) references voting_states(id) on delete restrict  on update restrict,
     primary key (id)
 ) //
 

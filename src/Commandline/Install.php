@@ -15,6 +15,10 @@ class Install extends CommandLineInstallSQL  implements ICommandline
     public static $files = [
         'install/ds_class' => 'setup ds_class',
 
+
+        'install/ddl/voting_states' => 'setup voting_states',
+        'install/ds/voting_states.ds' => 'setup ds voting_states.ds',
+
         'install/ddl/voting_state' => 'setup voting_state',
         'install/data/voting_state.data' => 'setup data voting_state',
 
@@ -230,6 +234,10 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
         'install/ddl/votemanager_setup_involvement_types' => 'setup votemanager_setup_involvement_types',
         'install/ds/votemanager_setup_involvement_types.ds' => 'setup ds votemanager_setup_involvement_types',
+
+
+
+
 
     ];
 }
