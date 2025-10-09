@@ -20,7 +20,8 @@
   "minimum-stability": "dev",
   "require": {
     "phpseclib/phpseclib": "~3.0.46",
-    "tualo/pug-printable-page": "^1.1"
+    "tualo/pug-printable-page": "^1.1",
+    "tualo/server": "^1.0"
   },
-  "version": "1.1.9"
+  "version": "1.1.10"
 }
