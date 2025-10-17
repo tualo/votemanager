@@ -161,6 +161,7 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
         'install/ddl/wahlberechtigte_anlage' => 'setup wahlberechtigte_anlage',
         'install/ddl/before_insert_wahlberechtigte_anlage' => 'setup before_insert_wahlberechtigte_anlage',
+        'install/ds/wahlberechtigte_anlage.ds' => 'setup wahlberechtigte_anlage.ds',
 
 
         'install/view/view_kandidaten_stimmenanzahl' => 'setup view_kandidaten_stimmenanzahl',

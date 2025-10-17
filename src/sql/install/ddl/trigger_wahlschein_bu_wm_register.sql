@@ -11,23 +11,23 @@ BEGIN
         wm_wahlschein_register
         join
         wahlschein
-          on wm_wahlschein_register.voter_id = wahlschein.id
+          on wm_wahlschein_register.id = wahlschein.id
         join 
           wahlberechtigte
-          on wahlberechtigte.identnummer = wahlschein.identnummer
+          on wahlberechtigte.identnummer = wahlschein.name
         join 
           wahlzeichnungsberechtigter
           on wahlberechtigte.id = wahlzeichnungsberechtigter.wahlberechtigte
         where
 
           (
-            JSON_VALUE(wm_wahlschein_register.formdata,'$.firstname') = wahlzeichnungsberechtigter.vorname
-            and JSON_VALUE(wm_wahlschein_register.formdata,'$.lastname') = wahlzeichnungsberechtigter.nachname
+            JSON_VALUE(wm_wahlschein_register.formdata,'$.first_name') = wahlzeichnungsberechtigter.vorname
+            and JSON_VALUE(wm_wahlschein_register.formdata,'$.last_name') = wahlzeichnungsberechtigter.nachname
           ) or
 
           (
-            JSON_VALUE(wm_wahlschein_register.formdata,'$.firstname') = wahlzeichnungsberechtigter.nachname
-            and JSON_VALUE(wm_wahlschein_register.formdata,'$.lastname') = wahlzeichnungsberechtigter.vorname
+            JSON_VALUE(wm_wahlschein_register.formdata,'$.first_name') = wahlzeichnungsberechtigter.nachname
+            and JSON_VALUE(wm_wahlschein_register.formdata,'$.last_name') = wahlzeichnungsberechtigter.vorname
 
           )
     ) THEN
