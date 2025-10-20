@@ -10,4 +10,4 @@ insert ignore into wm_sync_tables(table_name,position) values ('stimmzettelgrupp
 insert ignore into wm_sync_tables(table_name,position) values ('stimmzettel_fusstexte',5);
 insert ignore into wm_sync_tables(table_name,position) values ('stimmzettel_stimmzettel_fusstexte',6);
 insert ignore into wm_sync_tables(table_name,position) values ('wahlbezirk',1);
-insert ignore into wm_sync_tables(table_name,position) values ('wahlgruppe',2);
+insert ignore into wm_sync_tables(table_name,position) values ('blocked_voters',2);
