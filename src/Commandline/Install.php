@@ -236,6 +236,9 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ddl/votemanager_setup_involvement_types' => 'setup votemanager_setup_involvement_types',
         'install/ds/votemanager_setup_involvement_types.ds' => 'setup ds votemanager_setup_involvement_types',
 
+        'install/ddl/wahlzeichnungsberechtigter' => 'setup wahlzeichnungsberechtigter',
+        'install/ds/wahlzeichnungsberechtigter.ds' => 'setup ds wahlzeichnungsberechtigter',
+
         'install/ddl/wm_wahlschein_register' => 'setup wm_wahlschein_register',
 
 
