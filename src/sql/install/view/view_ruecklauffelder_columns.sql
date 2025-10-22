@@ -15,5 +15,5 @@ union select 'wahlbezirk_name' AS `column_name`,'Wahlbezirkname' AS `label`
 union select 'leerzeile' AS `column_name`,'Leerzeile' AS `label`
 union select 'leerzeile2' AS `column_name`,'Leerzeile2' AS `label`
 union select 'hstr' AS `column_name`,'Historie' AS `label`
-union select concat('displ_',stimmzettelfeld,'_name')  AS `column_name`, concat('SZ ',name,' Text') AS `label`  from wahltyp where aktiv=1
+-- union select concat('displ_',stimmzettelfeld,'_name')  AS `column_name`, concat('SZ ',name,' Text') AS `label`  from wahltyp where aktiv=1
 ;
