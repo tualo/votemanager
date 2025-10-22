@@ -242,6 +242,10 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ddl/wm_wahlschein_register' => 'setup wm_wahlschein_register',
 
 
+        'install/view/view_ruecklauffelder_columns' => 'setup view_ruecklauffelder_columns',
+        'install/ds/view_ruecklauffelder_columns.ds' => 'setup ds view_ruecklauffelder_columns',
+
+
 
 
     ];

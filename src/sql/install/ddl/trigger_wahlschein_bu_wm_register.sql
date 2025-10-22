@@ -10,6 +10,7 @@ BEFORE
 UPDATE ON `wahlschein` FOR EACH ROW
 BEGIN
   IF (NEW.abgabetyp=2 and NEW.wahlscheinstatus=2) THEN
+    if (@allow_signing_wahlschein IS NULL OR @allow_signing_wahlschein=0) THEN
     IF NOT EXISTS (
       
       
@@ -54,6 +55,7 @@ BEGIN
 
     ) THEN
       set NEW.wahlscheinstatus=-8;
+    END IF;
     END IF;
   END IF;
   
