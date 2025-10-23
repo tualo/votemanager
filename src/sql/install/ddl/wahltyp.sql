@@ -2,7 +2,7 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS  `wahltyp` (
   `id` int(11) NOT NULL DEFAULT 1,
   `name` varchar(255) DEFAULT NULL,
-  `feld` varchar(255) DEFAULT '',
+  `feld` varchar(255) DEFAULT 'wahlscheinstatus',
   `aktiv` tinyint(4) DEFAULT 1,
   `login` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -10,6 +10,12 @@ CREATE TABLE IF NOT EXISTS  `wahltyp` (
   PRIMARY KEY (`id`),
   KEY `idx_wahltyp_name` (`name`)
 ) ;
+
+alter table `wahltyp` modify `feld` varchar(255) DEFAULT 'wahlscheinstatus' ;
+alter table `wahltyp` add column if not exists `stimmzettelfeld` varchar(255) DEFAULT 'stimmzettel' ;
+call fill_ds('wahltyp');
+call fill_ds_column('wahltyp');
+
 
 
 

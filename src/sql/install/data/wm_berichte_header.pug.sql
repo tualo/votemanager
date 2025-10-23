@@ -1,6 +1,6 @@
 DELIMITER ;
 SET FOREIGN_KEY_CHECKS=0;
-replace into ds_pug_templates (name,id,note,template) values ('wm_berichte_header','wm_berichte_header',from_base64('d21fYmVyaWNodGVfaGVhZGVy'),from_base64( 'dGFibGUoc3R5bGU9IndpZHRoOiAxMDAlOyIpCiAgICB0cgogICAgICAgIHRkKHN0eWxlPSJ0ZXh0
+OPERATION_PLACEHOLDER ds_pug_templates (name,id,note,template) values ('wm_berichte_header','wm_berichte_header',from_base64('d21fYmVyaWNodGVfaGVhZGVy'),from_base64( 'dGFibGUoc3R5bGU9IndpZHRoOiAxMDAlOyIpCiAgICB0cgogICAgICAgIHRkKHN0eWxlPSJ0ZXh0
 LWFsaWduOmxlZnQ7IikKICAgICAgICAgICAgLSB2YXIgaW1nc3JjID0gYmFzZTY0ZmlsZSgicmVw
 b3J0ZmlsZXMiLCJMT0dPLmpwZyIsIl9fZmlsZV9uYW1lIikKICAgICAgICAgICAgaWYgKGltZ3Ny
 Yz09JycpCiAgICAgICAgICAgICAgICBzcGFuIEJpbGQgbmljaHQgZ2VmdW5kZW4hCiAgICAgICAg
