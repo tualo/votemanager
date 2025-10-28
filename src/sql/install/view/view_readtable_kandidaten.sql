@@ -1,6 +1,5 @@
 DELIMITER ;
-CREATE
-OR REPLACE VIEW `view_readtable_kandidaten` AS
+CREATE VIEW IF NOT EXISTS `view_readtable_kandidaten` AS
 select
     `stimmzettelgruppen`.`sitze` AS `sitze`,
     ifnull (`view_kandidaten_sitze_vergeben`.`vergeben`, 0) AS `vergeben`,
