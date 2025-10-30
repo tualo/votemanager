@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `voting_state` (
     id integer(11) NOT NULL,
     constraint check(id = 1),
     phase varchar(20) NOT NULL,
-    constraint check(phase in ('setup_phase', 'test_phase', 'production_phase', 'council_phase')),
+    constraint check(phase in ('setup_phase', 'test_phase', 'reset_phase', 'production_phase', 'council_phase')),
     
     -- enum('setup_phase', 'test_phase', 'production_phase','council_phase') NOT NULL,
     constraint `fk_voting_state_id` foreign key (phase) references voting_states(id) on delete restrict  on update restrict,
@@ -18,7 +18,9 @@ create or replace TRIGGER `trigger_voting_state_insert_bu` BEFORE update ON `vot
 FOR EACH ROW
 BEGIN
     IF OLD.phase = 'production_phase' THEN
-        if NEW.phase = 'setup_phase' or NEW.phase = 'test_phase' THEN
+        IF NEW.phase = 'setup_phase' 
+        or NEW.phase = 'test_phase'  
+        or NEW.phase = 'reset_phase' THEN
             signal sqlstate '45000' set message_text = 'Cannot update voting_state from production_phase';
         END IF;
     END IF;
