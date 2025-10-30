@@ -13,7 +13,7 @@ class Image extends \Tualo\Office\Basic\RouteWrapper
     {
         /*
         insert ignore into route_scopes (`scope`) values ('votemanager.image');
-insert ignore into route_scopes_permissions (`scope`, `group`, `allowed`) values ('votemanager.image', '_default_', 1);
+        insert ignore into route_scopes_permissions (`scope`, `group`, `allowed`) values ('votemanager.image', '_default_', 1);
 
         */
         return 'votemanager.image';
