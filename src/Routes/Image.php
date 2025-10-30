@@ -9,6 +9,15 @@ use Tualo\Office\DS\DSFiles;
 
 class Image extends \Tualo\Office\Basic\RouteWrapper
 {
+    public static function scope(): string
+    {
+        /*
+        insert ignore into route_scopes (`scope`) values ('votemanager.image');
+insert ignore into route_scopes_permissions (`scope`, `group`, `allowed`) values ('votemanager.image', '_default_', 1);
+
+        */
+        return 'votemanager.image';
+    }
     public static function register()
     {
 
@@ -55,6 +64,6 @@ class Image extends \Tualo\Office\Basic\RouteWrapper
             App::body(base64_decode($data));
             BasicRoute::$finished = true;
             http_response_code(200);
-        }, ['get'], true);
+        }, ['get'], true, [], self::scope());
     }
 }
