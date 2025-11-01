@@ -73,6 +73,27 @@ END IF;
 END //
 
 
+
+CREATE
+OR REPLACE TRIGGER `trigger_wahlschein_bu_pwhash` BEFORE
+UPDATE ON `wahlschein` FOR EACH ROW BEGIN 
+
+declare is_admin int;
+set is_admin = (select count(*) from view_session_groups where `group`= 'wahl_administration'  );
+
+IF NEW.pwhash <> OLD.pwhash AND is_admin<>1 THEN
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No permission to change pwhash';
+END IF;
+
+IF NEW.username <> OLD.username AND is_admin<>1 THEN
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No permission to change username';
+END IF;
+
+IF NEW.wahlscheinnummer <> OLD.wahlscheinnummer AND is_admin<>1 THEN
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No permission to change wahlscheinnummer';
+END IF;
+
+END //
 /*
 * View for read access to wahlschein table
 */
