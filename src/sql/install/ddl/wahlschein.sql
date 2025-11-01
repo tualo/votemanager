@@ -71,3 +71,37 @@ SET
 END IF;
 
 END //
+
+
+/*
+* View for read access to wahlschein table
+*/
+create view if not exists `view_readtable_wahlschein` as
+with setup as (
+    select count(*) is_admin from view_session_groups where `group`= 'wahl_administration'
+)
+select 
+  id,
+  stimmzettel,
+  wahlscheinnummer,
+  wahlberechtigte,
+  wahlscheinstatus,
+  wahlscheinstatus_grund,
+  abgabetyp,
+  if(setup.is_admin=1, pwhash, null) as pwhash,
+  if(setup.is_admin=1, username, null) as username,
+  blocknumber,
+  defered,
+  if(setup.is_admin=1, secret, null) as secret,
+  onlinecheck,
+  testdaten,
+  kombiniert,
+  usedate,
+  login,
+  created_at,
+  updated_at
+
+from 
+wahlschein
+join setup
+//
