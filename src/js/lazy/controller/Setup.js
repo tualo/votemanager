@@ -6,7 +6,12 @@ Ext.define('Tualo.VoteManager.lazy.controller.Setup', {
         let me = this,
             view = me.getView(),
             vm = view.getViewModel(),
-            data = await fetch('./onlinevote/state').then((response) => { return response.json() });
+            data = await fetch('./onlinevote/state', {
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+            }).then((response) => { return response.json() });
         if (data.success) {
             vm.set('interrupted', data.interrupted || false);
             if (data.starttime) {
@@ -33,7 +38,8 @@ Ext.define('Tualo.VoteManager.lazy.controller.Setup', {
         let o = await fetch('./onlinevote/savesesstings', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                "Accept": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 interrupted: vm.get('interrupted'),
