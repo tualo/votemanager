@@ -25,6 +25,7 @@ class Votemanager
             [],
             'phase'
         );
+        $value = VotemanagerPhase::tryFrom($value);
         return $value ?: VotemanagerPhase::Unknown;
     }
 
