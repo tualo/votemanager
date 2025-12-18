@@ -54,7 +54,10 @@ select
     briefwahlstimmzettel.erwartet AS `briefwahlstimmzettel_erwartet`,
     briefwahlstimmzettel.enthaltung AS `briefwahlstimmzettel_enthaltung`,
     briefwahlstimmzettel.ungueltig AS `briefwahlstimmzettel_ungueltig`,
-    briefwahlstimmzettel.anzahl AS `briefwahlstimmzettel_anzahl`
+    briefwahlstimmzettel.anzahl AS `briefwahlstimmzettel_anzahl`,
+
+    kandidaten.vorname AS vorname,
+    kandidaten.nachname AS nachname
 from
     (
         (
@@ -145,7 +148,9 @@ order by
         briefwahlstimmzettel_erwartet,
         briefwahlstimmzettel_enthaltung,
         briefwahlstimmzettel_ungueltig,
-        briefwahlstimmzettel_anzahl
+        briefwahlstimmzettel_anzahl,
+        vorname,
+        nachname
     from basedata_szg
 )
 
@@ -164,8 +169,8 @@ setup as (
 
         row_number() over (partition by stimmzettel_id order by barcode) listenplatz,
         
-        row_number() over (partition by stimmzettel_id order by stimmzettel_rang,id) rn,
-        row_number() over (partition by stimmzettel_id order by stimmzettel_rang,id)<=stimmzettel_sitze as gewaehlt,
+        rank() over (partition by stimmzettel_id order by stimmzettel_rang) rn,
+        rank() over (partition by stimmzettel_id order by stimmzettel_rang)<=stimmzettel_sitze as gewaehlt,
         basedata.*
     from basedata join setup on   setup.val='stimmzettel'
 
@@ -180,8 +185,8 @@ setup as (
 
         row_number() over (partition by stimmzettelgruppen_id order by barcode) listenplatz,
 
-        row_number() over (partition by stimmzettelgruppen_id order by stimmzettelgruppen_rang,id) rn,
-        row_number() over (partition by stimmzettelgruppen_id order by stimmzettelgruppen_rang,id)<=stimmzettelgruppen_sitze as gewaehlt,
+        rank() over (partition by stimmzettelgruppen_id order by stimmzettelgruppen_rang) rn,
+        rank() over (partition by stimmzettelgruppen_id order by stimmzettelgruppen_rang)<=stimmzettelgruppen_sitze as gewaehlt,
         basedata.*
     from basedata join setup on   setup.val='stimmzettelgruppen'
 ), 
