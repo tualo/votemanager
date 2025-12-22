@@ -19,18 +19,20 @@ select
   wahlbeteiligung_bericht_formel.`aktiv`,
   wahlbeteiligung_bericht_formel.`name`,
   json_arrayagg(
-      if(`wahlbeteiligung_bericht_formel_nenner`.`id` is null, null,
+      distinct
+      if(`wahlbeteiligung_bericht_formel_nenner`.`wahlbeteiligung_bericht` is null, null,
     json_object(
-      'id', `wahlbeteiligung_bericht_formel_nenner`.`id`,
+      'id', `wahlbeteiligung_bericht_formel_nenner`.`wahlbeteiligung_bericht`,
       'name', `wahlbeteiligung_bericht_formel_nenner`.`name`,
       'aktiv', `wahlbeteiligung_bericht_formel_nenner`.`aktiv`,
       'login', `wahlbeteiligung_bericht_formel_nenner`.`login`
     ))
   ) as nenner,
   json_arrayagg(
-      if(`wahlbeteiligung_bericht_formel_teiler`.`id` is null, null,
+      distinct
+      if(`wahlbeteiligung_bericht_formel_teiler`.`wahlbeteiligung_bericht` is null, null,
     json_object(
-      'id', `wahlbeteiligung_bericht_formel_teiler`.`id`,
+      'id', `wahlbeteiligung_bericht_formel_teiler`.`wahlbeteiligung_bericht`,
       'name', `wahlbeteiligung_bericht_formel_teiler`.`name`,
       'aktiv', `wahlbeteiligung_bericht_formel_teiler`.`aktiv`,
       'login', `wahlbeteiligung_bericht_formel_teiler`.`login`

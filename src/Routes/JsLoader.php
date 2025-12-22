@@ -1,6 +1,6 @@
 <?php
 
-namespace Tualo\Office\PaperVote\Routes;
+namespace Tualo\Office\VoteManager\Routes;
 
 use Tualo\Office\Basic\TualoApplication as App;
 use Tualo\Office\Basic\Route as BasicRoute;
