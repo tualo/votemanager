@@ -249,7 +249,7 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ddl/wahlschein_status_import' => 'setup wahlschein_status_import',
         'install/ds/wahlschein_status_import.ds' => 'setup ds wahlschein_status_import',
 
-        'install/proc/trigger_login_wahlschein.sql' => 'setup trigger_login_wahlschein',
+        'install/proc/trigger_login_wahlschein' => 'setup trigger_login_wahlschein',
 
         'install/ddl/wm_auswertungen' => 'setup wm_auswertungen',
         'install/ds/wm_auswertungen.ds' => 'setup ds wm_auswertungen',
