@@ -246,7 +246,10 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/view/view_ruecklauffelder_columns' => 'setup view_ruecklauffelder_columns',
         'install/ds/view_ruecklauffelder_columns.ds' => 'setup ds view_ruecklauffelder_columns',
 
+        'install/ddl/wahlschein_status_import' => 'setup wahlschein_status_import',
+        'install/ds/wahlschein_status_import.ds' => 'setup ds wahlschein_status_import',
 
+        'install/proc/trigger_login_wahlschein.sql' => 'setup trigger_login_wahlschein',
 
 
     ];

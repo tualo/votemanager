@@ -70,7 +70,7 @@ BEGIN
 
     DECLARE sql_command longtext;
         set sql_command = concat(
-            "call ",database(),".create_involvement_pivot(   view_wahlbeteiligung_base',     'use_name',     'top_col_id',      'sum_helper',     '',      '' )"
+            "call ",database(),".create_involvement_pivot(   view_wahlbeteiligung_base',     'use_id,use_name',     'top_col_id',      'sum_helper',     '',      '' )"
         );
 
         insert into deferred_sql_tasks
@@ -85,7 +85,7 @@ BEGIN
 
     DECLARE sql_command longtext;
         set sql_command = concat(
-            "call ",database(),".create_involvement_pivot(     'view_wahlbeteiligung_base',     'use_name',     'top_col_id',      'sum_helper',     '',      '' )"
+            "call ",database(),".create_involvement_pivot(     'view_wahlbeteiligung_base',     'use_id,use_name',     'top_col_id',      'sum_helper',     '',      '' )"
         );
 
         insert into deferred_sql_tasks
