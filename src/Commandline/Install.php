@@ -251,6 +251,7 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
         'install/proc/trigger_login_wahlschein.sql' => 'setup trigger_login_wahlschein',
 
-
+        'install/ddl/wm_auswertungen' => 'setup wm_auswertungen',
+        'install/ds/wm_auswertungen.ds' => 'setup ds wm_auswertungen',
     ];
 }
