@@ -1,10 +1,27 @@
+DELIMITER ;
+
+create table if not exists wahlbeteiligung_pivot_datatable as
+select 
+    concat(wahlberechtigte_anlage.stimmzettel,lpad(wahlberechtigte_anlage.identnummer,12,"0")) xid,
+    1=1 as auswertung_0,
+    json_object(
+        'auswertung_0', 1=1
+    ) as json_values
+from wahlberechtigte_anlage;
+
 create or replace view view_wahlbeteiligung_base as
 
 with setup as (
     select * from votemanager_setup where id='wm_involvement_report_base'
 ), 
-
+testdata as (
+    select count(*) use_testdata from votemanager_setup where id='wm_involvement_report_use_testdata' and val='1'
+),
+wahlschein_data as (
+    select * from votemanager_setup where id='wm_involvement_report_wahlschein_data_source'
+),
 basedata as (
+
    select 
         setup.val,
         stimmzettel.id use_id,
@@ -13,12 +30,18 @@ basedata as (
         wahlschein.wahlscheinstatus,
         wahlschein.abgabetyp,
         wahlschein.testdaten,
+        wahlbeteiligung_pivot_datatable.*,
         1 as sum_helper
     from 
         wahlschein
+        join wahlbeteiligung_pivot_datatable
+            on wahlbeteiligung_pivot_datatable.auswertung_id = wahlschein.id
+            and involvement_filter(wahlbeteiligung_pivot_datatable.json_values)
         join stimmzettel 
                 on stimmzettel.id = wahlschein.stimmzettel
         join setup on   setup.val='stimmzettel'
+        join testdata on   testdata.use_testdata = wahlschein.testdaten
+        
         
     union all 
 
@@ -31,14 +54,16 @@ basedata as (
         wahlscheinstatus.id as wahlscheinstatus,
         1 as abgabetyp,
         0 as testdaten,
+        wahlbeteiligung_pivot_datatable.*,
         briefwahlstimmzettel.ohne_wahlschein as sum_helper
     from 
         (select * from wahlscheinstatus where id = 10) wahlscheinstatus
+        join (select * from wahlbeteiligung_pivot_datatable limit 1) wahlbeteiligung_pivot_datatable
         join briefwahlstimmzettel 
         join stimmzettel 
                 on stimmzettel.id = briefwahlstimmzettel.stimmzettel
         
-        join setup on   setup.val='stimmzettel'
+        join setup on   setup.val='stimmzettel' 
     union all
     
     select 
@@ -49,14 +74,19 @@ basedata as (
         wahlschein.wahlscheinstatus,
         wahlschein.abgabetyp,
         wahlschein.testdaten,
+        wahlbeteiligung_pivot_datatable.*,
         1 as sum_helper
     from 
         wahlschein
+        join wahlbeteiligung_pivot_datatable
+            on wahlbeteiligung_pivot_datatable.auswertung_id = wahlschein.id
+            and involvement_filter(wahlbeteiligung_pivot_datatable.json_values)
         join stimmzettel 
                 on stimmzettel.id = wahlschein.stimmzettel
         join stimmzettelgruppen
                 on stimmzettelgruppen.stimmzettel = stimmzettel.id
         join setup on   setup.val='stimmzettelgruppen'
+        join testdata on   testdata.use_testdata = wahlschein.testdaten
     
     
     union all 
@@ -69,16 +99,18 @@ basedata as (
         wahlscheinstatus.id as wahlscheinstatus,
         1 as abgabetyp,
         0 as testdaten,
+        wahlbeteiligung_pivot_datatable.*,
         briefwahlstimmzettel.ohne_wahlschein as sum_helper
     from 
         (select * from wahlscheinstatus where id = 10) wahlscheinstatus
+        join (select * from wahlbeteiligung_pivot_datatable limit 1) wahlbeteiligung_pivot_datatable
         join briefwahlstimmzettel 
         join stimmzettel 
                 on stimmzettel.id = briefwahlstimmzettel.stimmzettel
         join stimmzettelgruppen
                 on stimmzettelgruppen.stimmzettel = stimmzettel.id
         
-        join setup on   setup.val='stimmzettelgruppen'
+        join setup on   setup.val='stimmzettelgruppen' 
     union all
     
     select 
@@ -89,14 +121,20 @@ basedata as (
         wahlschein.wahlscheinstatus,
         wahlschein.abgabetyp,
         wahlschein.testdaten,
+        wahlbeteiligung_pivot_datatable.*,
         1 as sum_helper
     from 
         wahlschein
+        join wahlbeteiligung_pivot_datatable
+            on wahlbeteiligung_pivot_datatable.auswertung_id = wahlschein.id
+            and involvement_filter(wahlbeteiligung_pivot_datatable.json_values)
         join stimmzettel 
                 on stimmzettel.id = wahlschein.stimmzettel
         join wahlgruppe
                 on wahlgruppe.id = stimmzettel.wahlgruppe
         join setup on   setup.val='wahlgruppe'
+        join testdata on   testdata.use_testdata = wahlschein.testdaten
+            
 
             
     union all 
@@ -109,14 +147,19 @@ basedata as (
         wahlschein.wahlscheinstatus,
         wahlschein.abgabetyp,
         wahlschein.testdaten,
+        wahlbeteiligung_pivot_datatable.*,
         1 as sum_helper
     from 
         wahlschein
+        join wahlbeteiligung_pivot_datatable
+            on wahlbeteiligung_pivot_datatable.auswertung_id = wahlschein.id
+            and involvement_filter(wahlbeteiligung_pivot_datatable.json_values)
         join stimmzettel 
                 on stimmzettel.id = wahlschein.stimmzettel
         join wahlbezirk
                 on wahlbezirk.id = stimmzettel.wahlbezirk
         join setup on   setup.val='wahlbezirk'
+        join testdata on   testdata.use_testdata = wahlschein.testdaten
 ),
 wstest as (
     select 

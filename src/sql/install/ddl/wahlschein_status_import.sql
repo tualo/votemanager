@@ -11,12 +11,13 @@ CREATE TABLE IF NOT EXISTS `wahlschein_status_import` (
   `processed_msg` varchar(255) DEFAULT NULL,
   `wahlscheinnummer` varchar(24) DEFAULT NULL,
   `identnummer` varchar(24) DEFAULT NULL,
-  `neuer_status` int(11)  DEFAULT NULL,
+  `neuer_status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_wahlschein_status_import_processed_state` (`processed_state`)
 ) //
 
 alter table wahlschein_status_import modify processed_datetime datetime default null //
+alter table wahlschein_status_import modify `neuer_status` varchar(255) DEFAULT NULL //
 
 CREATE TABLE IF NOT EXISTS `import_status_ausgangszustand` (
   `id_wahlscheinstatus` int(11) NOT NULL,
@@ -303,8 +304,9 @@ CREATE OR REPLACE PROCEDURE `set_wahlschein_status_iterim`()
                 wahlscheinstatus = i_neuer_status
         where
 
-                name = i_identnummer;
-                
+                wahlberechtigte in (
+                    select id from wahlberechtigte where identnummer = i_identnummer
+                );
 
         update
                 wahlschein_status_import
@@ -327,10 +329,12 @@ END //
 
 CREATE OR REPLACE PROCEDURE `set_wahlschein_status`()
 BEGIN 
+    
     drop table if exists matview_readtable_import_status_loop;
     create table matview_readtable_import_status_loop as
     select * from view_readtable_import_status_loop;
     create index idx_matview_readtable_import_status_loop_identnummer on matview_readtable_import_status_loop(identnummer);
     create index idx_matview_readtable_import_status_loop_wahlscheinnummer on matview_readtable_import_status_loop(wahlscheinnummer);
+
     call set_wahlschein_status_iterim();
 END //
