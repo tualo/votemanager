@@ -57,7 +57,15 @@ select
     briefwahlstimmzettel.anzahl AS `briefwahlstimmzettel_anzahl`,
 
     kandidaten.vorname AS vorname,
-    kandidaten.nachname AS nachname
+    kandidaten.nachname AS nachname,
+    kandidaten.titel AS titel,
+    trim(concat(
+        kandidaten.titel,
+        ' ',
+        kandidaten.vorname,
+        ' ',
+        kandidaten.nachname
+    )) AS anzeige_name
 from
     (
         (
@@ -150,7 +158,9 @@ order by
         briefwahlstimmzettel_ungueltig,
         briefwahlstimmzettel_anzahl,
         vorname,
-        nachname
+        nachname,
+        titel,
+        anzeige_name
     from basedata_szg
 )
 

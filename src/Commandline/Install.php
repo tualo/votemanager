@@ -254,5 +254,10 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
         'install/ddl/wm_auswertungen' => 'setup wm_auswertungen',
         'install/ds/wm_auswertungen.ds' => 'setup ds wm_auswertungen',
+
+        'install/view/view_protokoll_online_erwartet' => 'setup view_protokoll_online_erwartet',
+        'install/ds/view_protokoll_online_erwartet.ds' => 'setup ds view_protokoll_online_erwartet',
+
+
     ];
 }
