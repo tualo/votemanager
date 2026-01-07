@@ -258,6 +258,14 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/view/view_protokoll_online_erwartet' => 'setup view_protokoll_online_erwartet',
         'install/ds/view_protokoll_online_erwartet.ds' => 'setup ds view_protokoll_online_erwartet',
 
+        'install/view/view_wm_wahlschein_abgewiesene_online' => 'setup view_wm_wahlschein_abgewiesene_online',
+        'install/ds/view_wm_wahlschein_abgewiesene_online.ds' => 'setup ds view_wm_wahlschein_abgewiesene_online',
+
+        'install/view/view_wm_wahlschein_register_abgabe_zeichnungsberechtigt_single' => 'setup view_wm_wahlschein_register_abgabe_zeichnungsberechtigt_single',
+        'install/ds/view_wm_wahlschein_register_abgabe_zeichnungsberechtigt_single.ds' => 'setup ds view_wm_wahlschein_register_abgabe_zeichnungsberechtigt_single',
+
+        'install/view/view_wm_wahlschein_register_abgabe_zeichnungsberechtigt' => 'setup view_wm_wahlschein_register_abgabe_zeichnungsberechtigt',
+        'install/ds/view_wm_wahlschein_register_abgabe_zeichnungsberechtigt.ds' => 'setup ds view_wm_wahlschein_register_abgabe_zeichnungsberechtigt'
 
     ];
 }

@@ -22,4 +22,5 @@ INSERT IGNORE INTO `ds_column_form_label` (`active`,`allowempty`,`column_name`,`
 INSERT IGNORE INTO `ds_reference_tables` (`active`,`autosync`,`columnsdef`,`constraint_name`,`existsreal`,`path`,`position`,`reference_table_name`,`searchable`,`table_name`,`tabtitle`) VALUES ('1','0','{\"bogen\":\"id\"}','fk_wm_tanboegen_bogen','1','','999','wm_tanboegen','0','wm_tannummer','') ; 
 INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`role`,`table_name`,`write`) VALUES ('0','0','0','_default_','wm_tannummer','0') ; 
 INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`role`,`table_name`,`write`) VALUES ('1','1','1','administration','wm_tannummer','1') ; 
+REPLACE INTO `docsystem_ds` (`table_name`) VALUES ('wm_tannummer') ; 
 SET FOREIGN_KEY_CHECKS=1;
