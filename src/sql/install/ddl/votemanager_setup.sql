@@ -13,6 +13,6 @@ insert ignore into votemanager_setup (id, val) values ('wm_report_pagenumbers', 
 insert ignore into votemanager_setup (id, val) values ('wm_report_bp_break', 'yes');
 
 
-insert ignore into votemanager_setup (id, val) values ('wm_involvement_report_base', 'wahlgruppe');
+insert ignore into votemanager_setup (id, val) values ('wm_involvement_report_base', 'stimmzettel');
 
 
