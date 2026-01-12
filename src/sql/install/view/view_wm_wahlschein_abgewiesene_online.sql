@@ -25,7 +25,7 @@ select
         char(10)
     ) AS `address`,
     group_concat (
-        ifnull (`wahlzeichnungsberechtigter`.`name`, '') separator '\n'
+        ifnull (`wahlzeichnungsberechtigter`.`name`, '') separator ' '
     ) AS `zb`,
     `stimmzettel`.`name` AS `stimmzettel_name`
 from
