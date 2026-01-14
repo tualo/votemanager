@@ -7,25 +7,25 @@ select
     `wahlschein`.`login` AS `login`,
     `wahlberechtigte`.`identnummer` AS `identnummer`,
     `wm_wahlschein_register`.`formdata` AS `formdata`,
-    json_value (
+    json_value(
         `wm_wahlschein_register`.`formdata`,
         '$.first_name'
     ) AS `firstname`,
-    json_value (
+    json_value(
         `wm_wahlschein_register`.`formdata`,
         '$.last_name'
     ) AS `lastname`,
-    concat (
-        ifnull (`wahlberechtigte_anlage`.`identnummer`, ''),
+    concat(
+        ifnull(`wahlberechtigte_anlage`.`identnummer`, ''),
         char(10)
         
     ) AS `fullname`,
-    concat (
-        ifnull (`wahlberechtigte_anlage`.`identnummer`, ''),
+    concat(
+        ifnull(`wahlberechtigte_anlage`.`identnummer`, ''),
         char(10)
     ) AS `address`,
-    group_concat (
-        ifnull (`wahlzeichnungsberechtigter`.`name`, '') separator ' '
+    group_concat(
+        ifnull(`wahlzeichnungsberechtigter`.`name`, '') separator ' '
     ) AS `zb`,
     `stimmzettel`.`name` AS `stimmzettel_name`
 from
