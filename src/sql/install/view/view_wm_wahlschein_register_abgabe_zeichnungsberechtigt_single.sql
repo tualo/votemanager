@@ -1,4 +1,4 @@
-selimiter ;
+delimiter ;
 CREATE VIEW
     IF NOT EXISTS `view_wm_wahlschein_register_abgabe_zeichnungsberechtigt_single` AS
 select
