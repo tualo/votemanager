@@ -15,6 +15,7 @@ class Install extends CommandLineInstallSQL  implements ICommandline
     public static $files = [
         'install/ds_class' => 'setup ds_class',
 
+        'install/proc/involvement_filter' => 'setup proc involvement_filter',
 
         'install/ddl/voting_states' => 'setup voting_states',
         'install/ds/voting_states.ds' => 'setup ds voting_states.ds',
