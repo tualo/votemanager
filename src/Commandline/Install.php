@@ -265,7 +265,13 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ds/view_wm_wahlschein_register_abgabe_zeichnungsberechtigt_single.ds' => 'setup ds view_wm_wahlschein_register_abgabe_zeichnungsberechtigt_single',
 
         'install/view/view_wm_wahlschein_register_abgabe_zeichnungsberechtigt' => 'setup view_wm_wahlschein_register_abgabe_zeichnungsberechtigt',
-        'install/ds/view_wm_wahlschein_register_abgabe_zeichnungsberechtigt.ds' => 'setup ds view_wm_wahlschein_register_abgabe_zeichnungsberechtigt'
+        'install/ds/view_wm_wahlschein_register_abgabe_zeichnungsberechtigt.ds' => 'setup ds view_wm_wahlschein_register_abgabe_zeichnungsberechtigt',
+
+        'install/view/view_beteiligung_stimmzettel_pro_tag' => 'setup view_beteiligung_stimmzettel_pro_tag',
+        'install/ds/view_beteiligung_stimmzettel_pro_tag.ds' => 'setup ds view_beteiligung_stimmzettel_pro_tag',
+
+        'install/view/kandidaten_stimmenanzahl_losentscheid_stimmzettel' => 'setup kandidaten_stimmenanzahl_losentscheid_stimmzettel',
+        'install/ds/kandidaten_stimmenanzahl_losentscheid_stimmzettel.ds' => 'setup ds kandidaten_stimmenanzahl_losentscheid_stimmzettel',
 
     ];
 }

@@ -13,7 +13,10 @@ CREATE TABLE IF NOT EXISTS `wahlbeteiligung_bericht_status` (
   CONSTRAINT `fk_wahlbeteiligung_bericht_status_wahlbeteiligung_bericht` FOREIGN KEY (`wahlbeteiligung_bericht`) REFERENCES `wahlbeteiligung_bericht` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_wahlbeteiligung_bericht_status_wahlscheinstatus` FOREIGN KEY (`wahlscheinstatus`) REFERENCES `wahlscheinstatus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
-
+/*
+alter table wahlbeteiligung_bericht_status drop constraint if exists fk_wahlbeteiligung_bericht_status_wahlscheinstatus;
+alter table wahlbeteiligung_bericht_status add CONSTRAINT `fk_wahlbeteiligung_bericht_status_wahlscheinstatus` FOREIGN KEY (`wahlscheinstatus`) REFERENCES `wahlscheinstatus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+*/
 create or replace view view_readtable_wahlbeteiligung_bericht_status as
 
 

@@ -5,3 +5,5 @@ insert ignore into wahltyp (id, name, aktiv, login) values
 ('2','Gremialwahl','0','setup'),
 ('3','Plenarwahl','0','setup'),
 ('4','Regionalausschuss','0','setup');
+
+update  wahltyp set feld = 'wahlscheinstatus' where  feld is null or feld = '';
