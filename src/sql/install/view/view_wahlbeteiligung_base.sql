@@ -1,8 +1,9 @@
 DELIMITER ;
 
+
 create table if not exists wahlbeteiligung_pivot_datatable as
 select 
-    concat(wahlberechtigte_anlage.stimmzettel,lpad(wahlberechtigte_anlage.identnummer,12,"0")) xid,
+    concat(wahlberechtigte_anlage.stimmzettel,lpad(wahlberechtigte_anlage.identnummer,12,"0")) auswertung_id,
     1=1 as auswertung_0,
     json_object(
         'auswertung_0', 1=1
