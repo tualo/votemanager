@@ -95,11 +95,15 @@ BEGIN
     DECLARE _sql_aggregate  TEXT;
     DECLARE _sql_view  TEXT;
 
+    DECLARE _sql_column_names  TEXT;
+
 
 
 
 
     SET _sql_aggregate = '';
+    SET _sql_column_names = base_cols;
+
     for wahlbeteiligung_bericht in 
         (select concat("wb_",wahlbeteiligung_bericht.id) val,wahlbeteiligung_bericht.id  from wahlbeteiligung_bericht where aktiv = 1)
     do
@@ -110,6 +114,7 @@ BEGIN
         SET _sql_aggregate = concat(_sql_aggregate, 
             'SUM(IF(', pivot_col, ' = "', wahlbeteiligung_bericht.val, '", ', tally_col, ', 0)) AS `', wahlbeteiligung_bericht.val, '`'
         );
+        SET _sql_column_names = concat(_sql_column_names, ', `', wahlbeteiligung_bericht.val, '`');
 
         for wahlbeteiligung_bericht_abgabetyp in 
         (select concat("wb_",wahlbeteiligung_bericht_abgabetyp.bericht_id,'_',wahlbeteiligung_bericht_abgabetyp.abgabetyp) val,wahlbeteiligung_bericht_abgabetyp.bericht_id  from wahlbeteiligung_bericht_abgabetyp where  aktiv = 1 and wahlbeteiligung_bericht_abgabetyp.bericht_id = wahlbeteiligung_bericht.id)
@@ -121,23 +126,29 @@ BEGIN
             SET _sql_aggregate = concat(_sql_aggregate, 
                 'SUM(IF(', pivot_col, ' = "', wahlbeteiligung_bericht_abgabetyp.val, '", ', tally_col, ', 0)) AS `', wahlbeteiligung_bericht_abgabetyp.val, '`'
             );
+            SET _sql_column_names = concat(_sql_column_names, ', `', wahlbeteiligung_bericht_abgabetyp.val, '`');
         end for;
 
     end for;
 
+    SET _sql_column_names=replace(_sql_column_names,'use_id','ifnull(use_id,999999) as `use_id`');
+
     SET _sql_view = CONCAT(
-        'create or replace view `', tbl_name, '_pivot` as SELECT ',
-            base_cols, ',\n',
-            _sql_aggregate,
-            -- ',\n SUM(', tally_col, ') AS Total'
-        '\n FROM 
-        
-        ', tbl_name, ' 
-        
-        ',
-        where_clause,
-        ' GROUP BY ', base_cols,
+        'create or replace view `', tbl_name, '_pivot` as select  ', _sql_column_names, ' from (SELECT ',
+                base_cols, ',\n',
+                _sql_aggregate,
+                -- ',\n SUM(', tally_col, ') AS Total'
+            '\n FROM 
+            
+            ', tbl_name, ' 
+            
+            ',
+            where_clause,
+            ' GROUP BY ', base_cols,
         '\n WITH ROLLUP',
+        ') x '
+        '\n where (use_id is not null and use_name is not null) or  (use_id is null and use_name is  null )'
+
         '\n', order_by
     );
     
@@ -156,7 +167,7 @@ BEGIN
 
     DECLARE sql_command longtext;
         set sql_command = concat(
-            "call ",database(),".create_involvement_pivot(   'view_wahlbeteiligung_base',     'use_name',     'top_col_id',      'sum_helper',     '',      '' )"
+            "call ",database(),".create_involvement_pivot(   'view_wahlbeteiligung_base',     'use_name,use_id',     'top_col_id',      'sum_helper',     '',      '' )"
         );
 
         insert into deferred_sql_tasks
@@ -171,7 +182,7 @@ BEGIN
 
     DECLARE sql_command longtext;
         set sql_command = concat(
-            "call ",database(),".create_involvement_pivot(     'view_wahlbeteiligung_base',     'use_name',     'top_col_id',      'sum_helper',     '',      '' )"
+            "call ",database(),".create_involvement_pivot(     'view_wahlbeteiligung_base',     'use_name,use_id',     'top_col_id',      'sum_helper',     '',      '' )"
         );
 
         insert into deferred_sql_tasks

@@ -321,7 +321,7 @@ VALUES
         'wm_berichte_beteiligung_tagesprokoll_wrapper',
         'PDF',
         '',
-        0
+        1
     );
 
 INSERT INTO

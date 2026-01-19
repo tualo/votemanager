@@ -94,8 +94,8 @@ basedata as (
 
     select
         setup.val,
-        stimmzettel.id use_id,
-        stimmzettel.name use_name,
+        stimmzettelgruppen.id use_id,
+        stimmzettelgruppen.name use_name,
 
         wahlscheinstatus.id as wahlscheinstatus,
         1 as abgabetyp,

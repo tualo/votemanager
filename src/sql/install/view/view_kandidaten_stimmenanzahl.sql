@@ -1,5 +1,20 @@
-DELIMITER;
+DELIMITER //
 
+
+CREATE  OR REPLACE FUNCTION `use_kandidaten_stimmenanzahl_type`() RETURNS varchar(20)
+    DETERMINISTIC
+BEGIN
+  DECLARE res varchar(20);
+  if @use_kandidaten_stimmenanzahl_type IS NULL THEN
+    select val into res from votemanager_setup where id='wm_report_base';
+  else 
+    set res = @use_kandidaten_stimmenanzahl_type;
+  END IF;
+
+  return res;
+END //
+
+delimiter ;
 
 create or replace view `view_kandidaten_stimmenanzahl` as
 
@@ -168,7 +183,8 @@ order by
 , 
 
 setup as (
-    select * from votemanager_setup where id='wm_report_base'
+    select use_kandidaten_stimmenanzahl_type() as val
+
 ), predata as (
     select 
         setup.val,
@@ -182,7 +198,9 @@ setup as (
         rank() over (partition by stimmzettel_id order by stimmzettel_rang) rn,
         rank() over (partition by stimmzettel_id order by stimmzettel_rang)<=stimmzettel_sitze as gewaehlt,
         basedata.*
-    from basedata join setup on   setup.val='stimmzettel'
+    from basedata join setup on   
+    
+        setup.val='stimmzettel'
 
     union all 
         
