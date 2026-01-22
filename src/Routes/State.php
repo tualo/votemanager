@@ -84,6 +84,7 @@ class State extends \Tualo\Office\Basic\RouteWrapper
                 $db->direct('update voting_state set phase={phase}', ['phase' => $data['phase']]);
 
                 // ggf an die onlinewahl schicken
+                /*
                 if (class_exists('\Tualo\Office\PaperVote\APIRequestHelper')) {
 
                     $o = $db->directMap("
@@ -105,6 +106,7 @@ class State extends \Tualo\Office\Basic\RouteWrapper
                         App::result('put_result', $put_result);
                     }
                 }
+                    */
 
                 App::result('success', true);
                 $db->direct('commit;');
