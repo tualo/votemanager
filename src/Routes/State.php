@@ -97,7 +97,7 @@ class State extends \Tualo\Office\Basic\RouteWrapper
                     ", [], 'text', 'v');
 
                     if (isset($o['api_url'])) {
-                        $put_result = self::putRequest($o['api_url'] . '/~/' . $o['api_token'] . '/votemanager/state', $putData);
+                        $put_result = self::putRequest($o['api_url'] . '/~/' . $o['api_token'] . '/onlinevote/votemanager/state', $putData);
                         if (!$put_result['success']) {
                             throw new \Exception('Remote API Error: ' . $put_result['msg']);
                         }
