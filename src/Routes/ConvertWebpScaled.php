@@ -155,7 +155,7 @@ class ConvertWebpScaled extends \Tualo\Office\Basic\RouteWrapper
                             '__id' => 'kandidaten_bilder-' . uniqid(),
                             'id' => '',
                             'titel' => $bild['titel'],
-                            '__file_name' => $bild['__file_name'],
+                            '__file_name' => $bild['__file_name'] . '.' . $matches['imagetype'],
                             '__file_size' => strlen($croppedData),
                             '__file_type' => $resultMimeType,
                             '__file_data' => $imagedata,
