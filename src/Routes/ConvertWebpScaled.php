@@ -33,9 +33,21 @@ class ConvertWebpScaled extends \Tualo\Office\Basic\RouteWrapper
                     throw new \Exception('Operation not allowed in current phase');
                 }
 
-                App::result('wm_print_imagetype', DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_print_imagetype')->getSingleValue('val') || 'jpg');
-                App::result('wm_web_imagetype', DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_web_imagetype')->getSingleValue('val') || 'webp');
-                App::result('wm_convert_sourceid', DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_convert_sourceid')->getSingleValue('val') || '1');
+                App::result('wm_print_imagetype', 'jpg');
+                App::result('wm_web_imagetype', 'webp');
+                App::result('wm_convert_sourceid', '1');
+
+                if (DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_print_imagetype')->getSingleValue('val') !== false) {
+                    App::result('wm_print_imagetype', DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_print_imagetype')->getSingleValue('val'));
+                }
+
+                if (DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_web_imagetype')->getSingleValue('val') !== false) {
+                    App::result('wm_web_imagetype', DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_web_imagetype')->getSingleValue('val'));
+                }
+
+                if (DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_convert_sourceid')->getSingleValue('val') !== false) {
+                    App::result('wm_convert_sourceid', DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_convert_sourceid')->getSingleValue('val'));
+                }
 
                 App::result('id', $db->directArray('SELECT id FROM kandidaten', [], 'id'));
 
