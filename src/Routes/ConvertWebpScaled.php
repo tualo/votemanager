@@ -98,78 +98,79 @@ class ConvertWebpScaled extends \Tualo\Office\Basic\RouteWrapper
                         ->f('typ', '=', $matches['sourcetype'])
                         ->read()->getSingle();
 
-                    //print_r($kandidaten);
-                    $image = DSFiles::instance('kandidaten_bilder');
-                    $imagedata = $image->getBase64('id', $bild['id'], true);
+                    if (!is_null($bild)) {
+                        //print_r($kandidaten);
+                        $image = DSFiles::instance('kandidaten_bilder');
+                        $imagedata = $image->getBase64('id', $bild['id'], true);
 
-                    // Bildausschnitt aus Base64-Bild erstellen
-                    list($mime, $data) = explode(',', $imagedata);
+                        // Bildausschnitt aus Base64-Bild erstellen
+                        list($mime, $data) = explode(',', $imagedata);
 
-                    $imageSource = imagecreatefromstring(base64_decode($data));
+                        $imageSource = imagecreatefromstring(base64_decode($data));
 
-                    $imgWidth = imagesx($imageSource);
-                    $imgHeight = imagesy($imageSource);
+                        $imgWidth = imagesx($imageSource);
+                        $imgHeight = imagesy($imageSource);
 
-                    $targetWidth = (int)$matches['pixelwidth'];
-                    $targetHeight = (int)($imgHeight * ($targetWidth / $imgWidth));
+                        $targetWidth = (int)$matches['pixelwidth'];
+                        $targetHeight = (int)($imgHeight * ($targetWidth / $imgWidth));
 
-                    $croppedImage = imagecreatetruecolor($targetWidth, $targetHeight);
+                        $croppedImage = imagecreatetruecolor($targetWidth, $targetHeight);
 
-                    imagecopyresampled(
-                        $croppedImage,
-                        $imageSource,
-                        0,
-                        0,
-                        0,
-                        0,
-                        $targetWidth,
-                        $targetHeight,
-                        $imgWidth,
-                        $imgHeight
-                    );
+                        imagecopyresampled(
+                            $croppedImage,
+                            $imageSource,
+                            0,
+                            0,
+                            0,
+                            0,
+                            $targetWidth,
+                            $targetHeight,
+                            $imgWidth,
+                            $imgHeight
+                        );
 
 
-                    // Bild in Base64 konvertieren
-                    ob_start();
-                    switch ($matches['imagetype']) {
-                        case 'jpg':
-                            imagejpeg($croppedImage, null, 100);
-                            break;
-                        case 'png':
-                            imagepng($croppedImage, null, 9);
-                            break;
-                        default:
-                            imagewebp($croppedImage, null, 100);
+                        // Bild in Base64 konvertieren
+                        ob_start();
+                        switch ($matches['imagetype']) {
+                            case 'jpg':
+                                imagejpeg($croppedImage, null, 100);
+                                break;
+                            case 'png':
+                                imagepng($croppedImage, null, 9);
+                                break;
+                            default:
+                                imagewebp($croppedImage, null, 100);
+                        }
+                        $croppedData = ob_get_contents();
+                        ob_end_clean();
+
+                        $imagedata = 'data:' . $resultMimeType . ';base64,' . base64_encode($croppedData);
+
+
+                        $dataToSave = [
+                            '__table_name' => 'kandidaten_bilder',
+                            'typ' => $matches['targettype'],
+                            'kandidat' => $kandidaten['id'],
+                            '__id' => 'kandidaten_bilder-' . uniqid(),
+                            'id' => '',
+                            'titel' => $bild['titel'],
+                            '__file_name' => $bild['__file_name'],
+                            '__file_size' => strlen($croppedData),
+                            '__file_type' => $resultMimeType,
+                            '__file_data' => $imagedata,
+                            'export_name_template' => '',
+                            'file_id' => '',
+                            'hash' => md5($imagedata),
+                            'include_in_export' => false,
+                            'ctime' => null,
+                            'mtime' => null,
+                            'path' => '',
+                        ];
+
+                        DSTable::instance('kandidaten_bilder')->insert([$dataToSave]);
+                        App::result('converted', true);
                     }
-                    $croppedData = ob_get_contents();
-                    ob_end_clean();
-
-                    $imagedata = 'data:' . $resultMimeType . ';base64,' . base64_encode($croppedData);
-
-
-                    $dataToSave = [
-                        '__table_name' => 'kandidaten_bilder',
-                        'typ' => $matches['targettype'],
-                        'kandidat' => $kandidaten['id'],
-                        '__id' => 'kandidaten_bilder-' . uniqid(),
-                        'id' => '',
-                        'titel' => $bild['titel'],
-                        '__file_name' => $bild['__file_name'],
-                        '__file_size' => strlen($croppedData),
-                        '__file_type' => $resultMimeType,
-                        '__file_data' => $imagedata,
-                        'export_name_template' => '',
-                        'file_id' => '',
-                        'hash' => md5($imagedata),
-                        'include_in_export' => false,
-                        'ctime' => null,
-                        'mtime' => null,
-                        'path' => '',
-                    ];
-
-                    DSTable::instance('kandidaten_bilder')->insert([$dataToSave]);
-                    App::result('converted', true);
-
 
                     // Ressourcen freigeben
                     /*
