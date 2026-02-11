@@ -6,7 +6,10 @@ Ext.define('Tualo.VoteManager.lazy.models.ImageConverter', {
         wm_print_imagetype: 'jpg',
         wm_web_imagetype: 'webp',
         wm_convert_sourceid: '1',
-        id: []
+        wm_print_pixel_width: 800,
+        wm_web_pixel_width: 300,
+        id: [],
+        currentIndex: 0,
     },
     formulas: {
         formtext: function (get) {

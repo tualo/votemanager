@@ -36,6 +36,8 @@ class ConvertWebpScaled extends \Tualo\Office\Basic\RouteWrapper
                 App::result('wm_print_imagetype', 'jpg');
                 App::result('wm_web_imagetype', 'webp');
                 App::result('wm_convert_sourceid', '1');
+                App::result('wm_print_pixel_width', 800);
+                App::result('wm_web_pixel_width', 300);
 
                 if (DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_print_imagetype')->getSingleValue('val') !== false) {
                     App::result('wm_print_imagetype', DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_print_imagetype')->getSingleValue('val'));
@@ -47,6 +49,13 @@ class ConvertWebpScaled extends \Tualo\Office\Basic\RouteWrapper
 
                 if (DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_convert_sourceid')->getSingleValue('val') !== false) {
                     App::result('wm_convert_sourceid', DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_convert_sourceid')->getSingleValue('val'));
+                }
+
+                if (DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_print_pixel_width')->getSingleValue('val') !== false) {
+                    App::result('wm_print_pixel_width', DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_print_pixel_width')->getSingleValue('val'));
+                }
+                if (DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_web_pixel_width')->getSingleValue('val') !== false) {
+                    App::result('wm_web_pixel_width', DSTable::instance('votemanager_setup')->f('id', 'eq', 'wm_web_pixel_width')->getSingleValue('val'));
                 }
 
                 App::result('id', $db->directArray('SELECT id FROM kandidaten', [], 'id'));
