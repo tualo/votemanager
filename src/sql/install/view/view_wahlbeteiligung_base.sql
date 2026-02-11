@@ -32,6 +32,7 @@ basedata as (
         wahlschein.abgabetyp,
         wahlschein.testdaten,
         wahlbeteiligung_pivot_datatable.*,
+        0 ohne_wahlschein,
         1 as sum_helper
     from 
         wahlschein
@@ -55,7 +56,9 @@ basedata as (
         wahlscheinstatus.id as wahlscheinstatus,
         1 as abgabetyp,
         0 as testdaten,
+        
         wahlbeteiligung_pivot_datatable.*,
+        1 ohne_wahlschein,
         briefwahlstimmzettel.ohne_wahlschein as sum_helper
     from 
         (select * from wahlscheinstatus where id = 10) wahlscheinstatus
@@ -76,6 +79,7 @@ basedata as (
         wahlschein.abgabetyp,
         wahlschein.testdaten,
         wahlbeteiligung_pivot_datatable.*,
+        0 ohne_wahlschein,
         1 as sum_helper
     from 
         wahlschein
@@ -101,6 +105,7 @@ basedata as (
         1 as abgabetyp,
         0 as testdaten,
         wahlbeteiligung_pivot_datatable.*,
+        1 ohne_wahlschein,
         briefwahlstimmzettel.ohne_wahlschein as sum_helper
     from 
         (select * from wahlscheinstatus where id = 10) wahlscheinstatus
@@ -123,6 +128,7 @@ basedata as (
         wahlschein.abgabetyp,
         wahlschein.testdaten,
         wahlbeteiligung_pivot_datatable.*,
+        0 ohne_wahlschein,
         1 as sum_helper
     from 
         wahlschein
@@ -149,6 +155,7 @@ basedata as (
         wahlschein.abgabetyp,
         wahlschein.testdaten,
         wahlbeteiligung_pivot_datatable.*,
+        0 ohne_wahlschein,
         1 as sum_helper
     from 
         wahlschein
@@ -177,6 +184,7 @@ wstest as (
         join wahlbeteiligung_bericht
                 on wahlbeteiligung_bericht.id = wahlbeteiligung_bericht_status.wahlbeteiligung_bericht
                 and wahlbeteiligung_bericht.aktiv = 1
+                and (wahlbeteiligung_bericht.id<>7 and basedata.ohne_wahlschein = 0 or wahlbeteiligung_bericht.id=7 and basedata.ohne_wahlschein = 1)
 
     union all 
 
@@ -194,6 +202,7 @@ wstest as (
         join wahlbeteiligung_bericht
                 on wahlbeteiligung_bericht.id = wahlbeteiligung_bericht_status.wahlbeteiligung_bericht
                 and wahlbeteiligung_bericht.aktiv = 1
+                and (wahlbeteiligung_bericht.id<>7 and basedata.ohne_wahlschein = 0 or wahlbeteiligung_bericht.id=7 and basedata.ohne_wahlschein = 1)
         join wahlbeteiligung_bericht_abgabetyp
                 on wahlbeteiligung_bericht_abgabetyp.bericht_id = wahlbeteiligung_bericht.id
                 and wahlbeteiligung_bericht_abgabetyp.aktiv = 1
