@@ -1,6 +1,6 @@
 Ext.Loader.setPath('Tualo.VoteManager.lazy', './jsvotemanager');
 
-Ext.define('Tualo.routes.States', {
+Ext.define('Tualo.routes.Converter', {
     statics: {
         load: async function () {
             return [
