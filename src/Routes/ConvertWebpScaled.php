@@ -29,7 +29,7 @@ class ConvertWebpScaled extends \Tualo\Office\Basic\RouteWrapper
                 $db = $session->getDB();
 
 
-                if (Votemanager::isAllowed([VotemanagerPhase::Setup, VotemanagerPhase::Test])) {
+                if (!Votemanager::isAllowed([VotemanagerPhase::Setup, VotemanagerPhase::Test])) {
                     throw new \Exception('Operation not allowed in current phase');
                 }
 
@@ -50,7 +50,7 @@ class ConvertWebpScaled extends \Tualo\Office\Basic\RouteWrapper
             App::contenttype('application/json');
             App::result('success', false);
             try {
-                if (Votemanager::isAllowed([VotemanagerPhase::Setup, VotemanagerPhase::Test])) {
+                if (!Votemanager::isAllowed([VotemanagerPhase::Setup, VotemanagerPhase::Test])) {
                     throw new \Exception('Operation not allowed in current phase');
                 }
                 if (is_numeric($matches['sourcetype']) && is_numeric($matches['targettype']) && is_numeric($matches['pixelwidth'])) {
