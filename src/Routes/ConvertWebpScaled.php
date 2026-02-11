@@ -98,7 +98,7 @@ class ConvertWebpScaled extends \Tualo\Office\Basic\RouteWrapper
                         ->f('typ', '=', $matches['sourcetype'])
                         ->read()->getSingle();
 
-                    if (!is_null($bild)) {
+                    if (!is_null($bild) && !is_null($bild['id'])) {
                         //print_r($kandidaten);
                         $image = DSFiles::instance('kandidaten_bilder');
                         $imagedata = $image->getBase64('id', $bild['id'], true);

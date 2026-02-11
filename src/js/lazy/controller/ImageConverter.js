@@ -32,7 +32,7 @@ Ext.define('Tualo.VoteManager.lazy.controller.ImageConverter', {
         progressbar.updateProgress(vm.get('currentIndex') / vm.get('id').length, Math.round((vm.get('currentIndex') / vm.get('id').length) * 100) + '%');
         let res = await (await fetch('./votemanager/convert/' + vm.get('wm_print_imagetype') + '/' + vm.get('wm_convert_sourceid') + '/80/' + vm.get('wm_print_pixel_width') + '/' + vm.get('id')[vm.get('currentIndex')])).json();
         if (res.success) {
-            res = await (await fetch('./votemanager/convert/' + vm.get('wm_web_imagetype') + '/' + vm.get('wm_convert_sourceid') + '/80/' + vm.get('wm_web_pixel_width') + '/' + vm.get('id')[vm.get('currentIndex')])).json();
+            res = await (await fetch('./votemanager/convert/' + vm.get('wm_web_imagetype') + '/' + vm.get('wm_convert_sourceid') + '/90/' + vm.get('wm_web_pixel_width') + '/' + vm.get('id')[vm.get('currentIndex')])).json();
             if (res.success) {
                 vm.set('currentIndex', vm.get('currentIndex') + 1);
                 if (vm.get('currentIndex') < vm.get('id').length) {
