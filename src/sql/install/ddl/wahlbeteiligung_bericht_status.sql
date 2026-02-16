@@ -22,6 +22,7 @@ create or replace view view_readtable_wahlbeteiligung_bericht_status as
 
 select 
 wahlbeteiligung_bericht.id as `wahlbeteiligung_bericht_id`,
+wahlbeteiligung_bericht.id as `wahlbeteiligung_bericht`,
 wahlscheinstatus.id as `wahlscheinstatus`,
 ifnull(wahlbeteiligung_bericht_status.aktiv, 0) as `aktiv`
 from 
