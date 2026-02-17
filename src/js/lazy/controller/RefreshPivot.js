@@ -6,7 +6,7 @@ Ext.define('Tualo.VoteManager.lazy.controller.RefreshPivot', {
         let me = this,
             view = me.getView(),
             vm = view.getViewModel(),
-            data = await fetch('./onlinevote/state', {
+            data = await fetch('./votemanager/state', {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
