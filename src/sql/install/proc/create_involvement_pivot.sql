@@ -77,6 +77,9 @@ BEGIN
             
     end for;    
 
+
+    call recreate_involvement_baseview();
+
 END //
 
 CREATE OR REPLACE PROCEDURE create_involvement_pivot(

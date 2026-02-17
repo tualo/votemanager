@@ -1,4 +1,4 @@
-DELIMITER ;
+DELIMITER  //
 
 
 create table if not exists wahlbeteiligung_pivot_datatable as
@@ -8,7 +8,12 @@ select
     json_object(
         'auswertung_0', 1=1
     ) as json_values
-from wahlberechtigte_anlage;
+from wahlberechtigte_anlage //
+
+CREATE OR REPLACE PROCEDURE recreate_involvement_baseview()
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
 
 create or replace view view_wahlbeteiligung_base as
 
@@ -261,3 +266,7 @@ wstest as (
 
 )
 select * from wstest;
+
+end //
+
+call recreate_involvement_baseview() // 
