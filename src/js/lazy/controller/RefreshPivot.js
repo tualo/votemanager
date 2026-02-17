@@ -1,6 +1,6 @@
-Ext.define('Tualo.VoteManager.lazy.controller.Setup', {
+Ext.define('Tualo.VoteManager.lazy.controller.RefreshPivot', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.vote_manager_setup',
+    alias: 'controller.vote_manager_refreshpivot',
 
     onReady: async function () {
         let me = this,
@@ -13,15 +13,7 @@ Ext.define('Tualo.VoteManager.lazy.controller.Setup', {
                 },
             }).then((response) => { return response.json() });
         if (data.success) {
-            vm.set('interrupted', data.interrupted || false);
-            if (data.starttime) {
-                vm.set('starttime', Ext.util.Format.date(new Date(data.starttime), 'H:i:s'));
-                vm.set('startdate', Ext.util.Format.date(new Date(data.starttime), 'Y-m-d'));
-            }
-            if (data.stoptime) {
-                vm.set('stoptime', Ext.util.Format.date(new Date(data.stoptime), 'H:i:s'));
-                vm.set('stopdate', Ext.util.Format.date(new Date(data.stoptime), 'Y-m-d'));
-            }
+
         }
         view.enable();
     },
@@ -35,17 +27,12 @@ Ext.define('Tualo.VoteManager.lazy.controller.Setup', {
         if (vm.get('stoptime') instanceof Date) vm.set('stoptime', Ext.util.Format.date(vm.get('stoptime'), 'H:i:s'));
         if (vm.get('starttime') instanceof Date) vm.set('starttime', Ext.util.Format.date(vm.get('starttime'), 'H:i:s'));
 
-        let o = await fetch('./onlinevote/savesesstings', {
-            method: 'POST',
+        let o = await fetch('./votemanager/refreshpivot', {
+            method: 'GET',
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                interrupted: vm.get('interrupted'),
-                starttime: vm.get('startdate') + ' ' + vm.get('starttime'),
-                stoptime: vm.get('stopdate') + ' ' + vm.get('stoptime')
-            })
+            }
         }).then((response) => { return response.json() });
         if (o.success == false) {
             Ext.toast({
