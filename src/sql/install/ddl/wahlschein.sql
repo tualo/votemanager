@@ -42,11 +42,12 @@ WITH
 DELIMITER // 
 
 CREATE
-OR REPLACE TRIGGER `trigger_wahlschein_bi_defaults` BEFORE INSERT ON `wahlschein` FOR EACH ROW BEGIN IF NEW.login IS NULL THEN
-SET
-  NEW.login = getSessionUser ();
+OR REPLACE TRIGGER `trigger_wahlschein_bi_defaults` 
+BEFORE INSERT ON `wahlschein` FOR EACH ROW 
+BEGIN 
 
-END IF;
+SET NEW.login = getSessionUser ();
+
 
 IF NEW.created_at IS NULL THEN
 SET
@@ -57,12 +58,11 @@ END IF;
 END // 
 
 CREATE
-OR REPLACE TRIGGER `trigger_wahlschein_bu_defaults` BEFORE
-UPDATE ON `wahlschein` FOR EACH ROW BEGIN IF NEW.login IS NULL THEN
-SET
-  NEW.login = getSessionUser ();
+OR REPLACE TRIGGER `trigger_wahlschein_bu_defaults` 
+BEFORE UPDATE ON `wahlschein` 
+FOR EACH ROW BEGIN 
 
-END IF;
+SET NEW.login = getSessionUser ();
 
 IF NEW.created_at IS NULL THEN
 SET

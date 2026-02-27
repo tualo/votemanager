@@ -274,5 +274,8 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/view/kandidaten_stimmenanzahl_losentscheid_stimmzettel' => 'setup kandidaten_stimmenanzahl_losentscheid_stimmzettel',
         'install/ds/kandidaten_stimmenanzahl_losentscheid_stimmzettel.ds' => 'setup ds kandidaten_stimmenanzahl_losentscheid_stimmzettel',
 
+
+        'install/data/erweiterte_ds_rechte' => 'setup erweiterte_ds_rechte',
+
     ];
 }
