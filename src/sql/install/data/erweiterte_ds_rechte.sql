@@ -55,8 +55,6 @@ INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_n
 VALUES ('0','0','1','1','wahl_ruecklauf','wahlschein') ;
 
 
-INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`);
-
 
 
 insert ignore into route_scopes_permissions (scope,`group`,allowed)
