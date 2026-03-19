@@ -68,6 +68,20 @@ INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_n
 VALUES ('0','0','1','0','wahl_auswertungen','wahlbeteiligung_bericht') ;
 
 
+INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
+VALUES ('0','0','1','0','wahl_auswertungen','wm_berichte') ;
+
+INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
+VALUES ('0','0','1','0','wahl_auswertungen','kandidaten_stimmenanzahl_losentscheid_stimmzettel') ;
+
+INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
+VALUES ('0','0','1','0','wahl_auswertungen','view_protokoll_erwartet') ;
+
+INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
+VALUES ('0','0','1','0','wahl_auswertungen','view_kandidaten_stimmenanzahl') ;
+
+
+
 
 insert ignore into route_scopes_permissions (scope,`group`,allowed)
 select scope,'wahl_ruecklauf' `group`,1 allowed from route_scopes 
@@ -98,3 +112,5 @@ where scope ='votemanager.refreshpivot';
 insert ignore into route_scopes_permissions (scope,`group`,allowed)
 select scope,'wahl_auswertungen' `group`,1 allowed from route_scopes 
 where scope ='tempfile.download';
+
+
