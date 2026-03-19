@@ -1,5 +1,7 @@
 DELIMITER //
 
+INSERT IGNORE INTO `wm_auswertungen` (`id`, `login`, `name`, `feld`, `feldwerte`, `pos`, `aktiv`) VALUES (1,'SETUP','Testdaten','testdaten','\'1\'',0,0) //
+
 CREATE OR REPLACE PROCEDURE create_involvement_datatable()
     DETERMINISTIC
     SQL SECURITY INVOKER

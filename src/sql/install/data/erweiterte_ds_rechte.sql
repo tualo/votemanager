@@ -93,3 +93,8 @@ where scope ='papervote.rescan';
 insert ignore into route_scopes_permissions (scope,`group`,allowed)
 select scope,'wahl_administration' `group`,1 allowed from route_scopes 
 where scope ='votemanager.refreshpivot';
+
+
+insert ignore into route_scopes_permissions (scope,`group`,allowed)
+select scope,'wahl_auswertungen' `group`,1 allowed from route_scopes 
+where scope ='tempfile.download';
