@@ -303,11 +303,12 @@ CREATE OR REPLACE PROCEDURE `set_wahlschein_status_iterim`()
         set
                 wahlscheinstatus = i_neuer_status
         where
-
+            id = i_wahlschein_id;
+/*
                 wahlberechtigte in (
                     select id from wahlberechtigte where identnummer = i_identnummer
                 );
-
+*/
         update
                 wahlschein_status_import
         set

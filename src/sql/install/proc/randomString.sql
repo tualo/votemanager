@@ -39,11 +39,13 @@ begin
         DEALLOCATE PREPARE stmt;
 
         if (fieldToUnique='username') then
-            delete from temp_random_list where val in (select username from wahlschein FOR SYSTEM_TIME ALL);
+            -- delete from temp_random_list where val in (select username from wahlschein FOR SYSTEM_TIME ALL);
+            delete from temp_random_list where val in (select username from wahlschein_history);
         end if;
 
         if (fieldToUnique='wahlscheinnummer') then
-            delete from temp_random_list where val in (select wahlscheinnummer from wahlschein  FOR SYSTEM_TIME ALL);
+            -- delete from temp_random_list where val in (select wahlscheinnummer from wahlschein  FOR SYSTEM_TIME ALL);
+            delete from temp_random_list where val in (select wahlscheinnummer from wahlschein_history);
         end if;
 
         set c = (select count(*)x from temp_random_list);

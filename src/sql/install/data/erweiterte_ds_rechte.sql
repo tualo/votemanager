@@ -48,3 +48,8 @@ VALUES ('0','0','1','1','wahl_onlinewahl_sync','ds_files') ;
 
 INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
 VALUES ('0','0','1','1','wahl_onlinewahl_sync','ds_files_data') ;
+
+
+
+INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
+VALUES ('0','0','1','1','wahl_ruecklauf','wahlschein') ;
