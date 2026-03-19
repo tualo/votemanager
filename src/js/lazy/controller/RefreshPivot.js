@@ -27,23 +27,33 @@ Ext.define('Tualo.VoteManager.lazy.controller.RefreshPivot', {
         if (vm.get('stoptime') instanceof Date) vm.set('stoptime', Ext.util.Format.date(vm.get('stoptime'), 'H:i:s'));
         if (vm.get('starttime') instanceof Date) vm.set('starttime', Ext.util.Format.date(vm.get('starttime'), 'H:i:s'));
 
-        let o = await fetch('./votemanager/refreshpivot', {
-            method: 'GET',
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
+        try {
+            let o = await fetch('./votemanager/refreshpivot', {
+                method: 'GET',
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then((response) => { return response.json() });
+            if (o.success == false) {
+                Ext.toast({
+                    html: o.msg,
+                    title: 'Fehler',
+                    align: 't',
+                    iconCls: 'fa fa-warning'
+                });
             }
-        }).then((response) => { return response.json() });
-        if (o.success == false) {
+
+            view.enable();
+        } catch (e) {
             Ext.toast({
-                html: o.msg,
+                html: e,
                 title: 'Fehler',
                 align: 't',
                 iconCls: 'fa fa-warning'
             });
+            view.enable();
         }
-
-        view.enable();
     }
 
 });

@@ -57,6 +57,18 @@ VALUES ('0','0','1','1','wahl_ruecklauf','wahlschein') ;
 
 
 
+INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
+VALUES ('0','0','1','0','wahl_auswertungen','abgabetyp') ;
+
+
+INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
+VALUES ('0','0','1','0','wahl_auswertungen','wahlbeteiligung_bericht_formel') ;
+
+INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
+VALUES ('0','0','1','0','wahl_auswertungen','wahlbeteiligung_bericht') ;
+
+
+
 insert ignore into route_scopes_permissions (scope,`group`,allowed)
 select scope,'wahl_ruecklauf' `group`,1 allowed from route_scopes 
 where scope ='papervote.return';
