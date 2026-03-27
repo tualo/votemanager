@@ -80,7 +80,8 @@ VALUES ('0','0','1','0','wahl_auswertungen','view_protokoll_erwartet') ;
 INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
 VALUES ('0','0','1','0','wahl_auswertungen','view_kandidaten_stimmenanzahl') ;
 
-
+INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`role`,`table_name`,`write`) 
+VALUES ('0','0','1','wahl_auszaehlung','kandidaten','0') ;
 
 
 insert ignore into route_scopes_permissions (scope,`group`,allowed)
@@ -118,3 +119,10 @@ insert ignore into route_scopes_permissions (scope,`group`,allowed)
 select scope,'wahl_administration' `group`,1 allowed from route_scopes 
 where scope ='onlinevote.create.ballotbox';
 
+insert ignore into route_scopes_permissions (scope,`group`,allowed)
+select scope,'wahl_leitung' `group`,1 allowed from route_scopes 
+where scope ='onlinevote.create.ballotbox';
+
+insert ignore into route_scopes_permissions (scope,`group`,allowed)
+select scope,'wahl_leitung' `group`,1 allowed from route_scopes 
+where scope ='onlinevote.state';
