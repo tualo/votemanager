@@ -188,9 +188,8 @@ BEGIN
             usedate,
             login ,
             row_start,
-            row_start
+            row_end
         from wahlschein for system_time all
-        limit 20000
     ) do
         if check_count=1000 then
 

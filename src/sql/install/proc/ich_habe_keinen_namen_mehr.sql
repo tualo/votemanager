@@ -2,15 +2,17 @@
 
 
 
+
 create table if not exists ich_habe_keinen_namen_mehr (
     auswertung_id	bigint(20) not null,
     use_id	int(11) not null,
-    primary key (auswertung_id,use_id),
-    
     top_col_id	varchar(26) not null,
+    primary key (auswertung_id,use_id,top_col_id),
+    
 
     wahlscheinstatus	int(11) not null,
     abgabetyp	int(11) not null,
+    wahltyp	int(11) not null,
 
     testdaten	boolean not null default false,
     
@@ -25,11 +27,12 @@ create table if not exists ich_habe_keinen_namen_mehr (
     auswertung_8	boolean not null default false,
     auswertung_9	boolean not null default false,
 
-    -- achtung wrid mehr, wenn unter wm_auswertungen mehr abfregen erstellt werden
+    -- achtung wird mehr, wenn unter wm_auswertungen mehr abfragen erstellt werden
     -- json_values	varchar(113) not null,
     sum_helper	tinyint not null,
     
     index idx_ich_habe_keinen_namen_mehr_auswertung_id (auswertung_id),
+    index idx_ich_habe_keinen_namen_mehr_wahltyp (wahltyp),
 
     index idx_ich_habe_keinen_namen_mehr_auswertung_0 (auswertung_0),
     index idx_ich_habe_keinen_namen_mehr_auswertung_1 (auswertung_1),
@@ -47,6 +50,7 @@ BEGIN
     delete from ich_habe_keinen_namen_mehr where auswertung_id = wahlschein_id;
 
 
+
     insert into ich_habe_keinen_namen_mehr (
 
         auswertung_id,
@@ -55,6 +59,7 @@ BEGIN
         wahlscheinstatus,
         abgabetyp,
         testdaten,
+        wahltyp,
         
         auswertung_0,
         auswertung_1,
@@ -80,9 +85,11 @@ BEGIN
 
                 auswertung_0,
                 auswertung_1,
-                auswertung_2
+                auswertung_2,
+                wahltyp
             
-            from wahlbeteiligung_pivot_datatable   where auswertung_id = 1000099999001
+            from wahlbeteiligung_pivot_datatable   
+            where auswertung_id = wahlschein_id
         ),
 
         wstest as (
@@ -96,6 +103,7 @@ BEGIN
                 `wahlschein`.`wahlscheinstatus` AS `wahlscheinstatus`,
                 `wahlschein`.`abgabetyp` AS `abgabetyp`,
                 `wahlschein`.`testdaten` AS `testdaten`,
+                `basedata`.`wahltyp` AS `wahltyp`,
 
                 `basedata`.`auswertung_id` AS `auswertung_id`,
                 `basedata`.`auswertung_0` AS `auswertung_0`,
@@ -139,6 +147,7 @@ BEGIN
                 `wahlschein`.`wahlscheinstatus` AS `wahlscheinstatus`,
                 `wahlschein`.`abgabetyp` AS `abgabetyp`,
                 `wahlschein`.`testdaten` AS `testdaten`,
+                `basedata`.`wahltyp` AS `wahltyp`,
                 `basedata`.`auswertung_id` AS `auswertung_id`,
                 `basedata`.`auswertung_0` AS `auswertung_0`,
                 `basedata`.`auswertung_1` AS `auswertung_1`,
@@ -184,6 +193,7 @@ BEGIN
             `wstest`.`wahlscheinstatus` AS `wahlscheinstatus`,
             `wstest`.`abgabetyp` AS `abgabetyp`,
             `wstest`.`testdaten` AS `testdaten`,
+            `wstest`.`wahltyp` AS `wahltyp`,
             `wstest`.`auswertung_0` AS `auswertung_0`,
             `wstest`.`auswertung_1` AS `auswertung_1`,
             `wstest`.`auswertung_2` AS `auswertung_2`,
@@ -206,8 +216,10 @@ BEGIN
 
     
     
-    for rec in ( select *  from wahlschein  where wahlscheinstatus  in (select id from wahlscheinstatus where id <> 1) and  updated_at > last_start - interval + 2 hour ) do
+    -- for rec in ( select *  from wahlschein  where wahlscheinstatus  in (select id from wahlscheinstatus where id <> 1) and  updated_at > last_start - interval + 2 hour ) do
+    for rec in ( select *  from wahlschein  where  updated_at > last_start - interval + 2 hour ) do
         call refresh_ich_habe_keinen_namen_mehr(rec.id);
     end for;
     replace into votemanager_setup(id,val) values ('fill_ich_habe_keinen_namen_mehr_last_start',now());
 END //
+

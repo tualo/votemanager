@@ -37,15 +37,17 @@ BEGIN
     create table if not exists wahlbeteiligung_pivot_datatable as
     select 
         cast( concat(wahlberechtigte_anlage.stimmzettel,lpad(wahlberechtigte_anlage.identnummer,12,"0")) as int) auswertung_id,
+        stimmzettel.wahltyp,
         1=1 as auswertung_0
         ', if(_sql_flds is null,'',concat(',',_sql_flds)) ,'
         ', if(_sql_json is null,'',concat(',',_sql_json)) ,' as json_values',
 
-    '    from wahlberechtigte_anlage'
+    '    from wahlberechtigte_anlage join stimmzettel on wahlberechtigte_anlage.stimmzettel = stimmzettel.id'
     );
     PREPARE _sql FROM _sql_datatable;
     EXECUTE _sql;
     DEALLOCATE PREPARE _sql;
+
 
 
     SET _sql_datatable = CONCAT('alter table wahlbeteiligung_pivot_datatable modify column auswertung_id bigint not null primary key');

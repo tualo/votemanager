@@ -22,3 +22,16 @@ BEGIN
     );
   RETURN lvl;
 END //
+
+ 
+CREATE  OR REPLACE FUNCTION `involvement_votetype_filter`(wahltyp integer) RETURNS BOOLEAN
+    DETERMINISTIC
+BEGIN
+  DECLARE lvl BOOLEAN DEFAULT FALSE;
+  DECLARE keyname integer;
+  if @involvement_votetype_filter_id IS NULL THEN
+    return true;
+  END IF;
+
+  return wahltyp = @involvement_votetype_filter_id;
+END //
