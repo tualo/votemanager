@@ -1,16 +1,16 @@
 DELIMITER ;
-CREATE OR REPLACE VIEW `view_beteiligung_stimmzettel` AS (
+REATE OR REPLACE VIEW `view_beteiligung_stimmzettel` AS (
     select
         cast(`wahlschein`.`row_start` as date) AS `datum_ts`,
-       cast(`wahlschein`.`row_start` as date) AS `datum`,
+        cast(`wahlschein`.`row_start` as date) AS `datum`,
         `wahlschein`.`wahlscheinstatus` AS `wahlscheinstatus`,
         `wahlschein`.`stimmzettel` AS `stimmzettel`,
         `x`.`waehler` AS `ges_SZ`,
         `x`.`name` AS `SZ`,
         sum(if(`wahlschein`.`abgabetyp` = 1, 1, 0)) AS `briefwahl`,
         sum(if(`wahlschein`.`abgabetyp` = 1, 1, 0)) * 1000 / `x`.`waehler` AS `briefwahl_prozent`,
-        0 AS `onlinewahl`,
-        0 AS `onlinewahl_prozent`
+        sum(if(`wahlschein`.`abgabetyp` = 2, 1, 0)) AS `onlinewahl`,
+        sum(if(`wahlschein`.`abgabetyp` = 2, 1, 0)) * 1000 / `x`.`waehler` AS `onlinewahl_prozent`
     from
         (
             `wahlschein`
@@ -27,9 +27,7 @@ CREATE OR REPLACE VIEW `view_beteiligung_stimmzettel` AS (
                 from
                     (
                         `stimmzettel`
-                        join `wahlschein` on(
-                            `wahlschein`.`stimmzettel` = `stimmzettel`.`id`
-                        )
+                        join `wahlschein` on(`wahlschein`.`stimmzettel` = `stimmzettel`.`id`)
                     )
                 group by
                     `stimmzettel`.`id`

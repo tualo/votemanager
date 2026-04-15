@@ -217,7 +217,8 @@ BEGIN
     
     
     -- for rec in ( select *  from wahlschein  where wahlscheinstatus  in (select id from wahlscheinstatus where id <> 1) and  updated_at > last_start - interval + 2 hour ) do
-    for rec in ( select *  from wahlschein  where  updated_at > last_start - interval + 2 hour ) do
+    for rec in ( select *  from wahlschein  where  updated_at > last_start - interval + 12 hour ) do
+
         call refresh_ich_habe_keinen_namen_mehr(rec.id);
     end for;
     replace into votemanager_setup(id,val) values ('fill_ich_habe_keinen_namen_mehr_last_start',now());

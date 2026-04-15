@@ -15,7 +15,7 @@ ubb.anzahl ungueltig
 
 from 
 
-(select * from stimmzettel) sz
+(select * from stimmzettel where aktiv=1) sz
 left join (select stimmzettel,count(*) c from wahlschein where abgabetyp = 2 and wahlscheinstatus=2
     and testdaten =0 
 group by stimmzettel) ws on ws.stimmzettel = sz.id
