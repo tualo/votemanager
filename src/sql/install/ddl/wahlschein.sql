@@ -1,4 +1,5 @@
-DELIMITER ;
+DELIMITER // 
+
 CREATE TABLE IF NOT EXISTS `wahlschein` (
   `id` bigint(20) NOT NULL,
   `stimmzettel` int(11) NOT NULL,
@@ -35,12 +36,28 @@ CREATE TABLE IF NOT EXISTS `wahlschein` (
     CONSTRAINT `fk_wahlschein_wahlscheinstatus` FOREIGN KEY (`wahlscheinstatus`) REFERENCES `wahlscheinstatus` (`id`) ON DELETE restrict ON UPDATE CASCADE,
     CONSTRAINT `fk_wahlschein_abgabetyp` FOREIGN KEY (`abgabetyp`) REFERENCES `abgabetyp` (`id`) ON DELETE restrict ON UPDATE CASCADE,
     CONSTRAINT `fk_wahlschein_blocknumber` FOREIGN KEY (`blocknumber`) REFERENCES `wahlschein_blocknumbers` (`blocknumber`) ON DELETE restrict ON UPDATE CASCADE
-) 
-WITH
-  SYSTEM VERSIONING;
+) //
+-- WITH
+--   SYSTEM VERSIONING;
 
+/*
+alter table wahlschein add   PRIMARY KEY (`id`,`stimmzettel`);
+alter table wahlschein add  KEY `idx_wahlschein_wahlscheinstatus` (`wahlscheinstatus`);
+alter table wahlschein add  KEY `idx_wahlschein_wahlscheinstatus_grund` (`wahlscheinstatus_grund`);
+alter table wahlschein add  KEY `idx_wahlschein_wahlberechtigte` (`wahlberechtigte`);
+alter table wahlschein add  KEY `idx_wahlschein_wahlscheinnummer` (`wahlscheinnummer`);
+alter table wahlschein add  KEY `idx_wahlschein_abgabetyp` (`abgabetyp`);
+alter table wahlschein add  KEY `idx_wahlschein_stimmzettel` (`stimmzettel`);
+alter table wahlschein add  KEY `idx_wahlschein_username` (`username`);
+alter table wahlschein add  KEY `idx_wahlschein_kombiniert` (`kombiniert`);
+alter table wahlschein add  KEY `idx_wahlschein_blocknumber` (`blocknumber`);
 
-DELIMITER // 
+alter table wahlschein add     CONSTRAINT `fk_wahlschein_stimmzettel` FOREIGN KEY (`stimmzettel`) REFERENCES `stimmzettel` (`id`) ON DELETE restrict ON UPDATE CASCADE;
+alter table wahlschein add     CONSTRAINT `fk_wahlschein_wahlberechtigte` FOREIGN KEY (`wahlberechtigte`) REFERENCES `wahlberechtigte` (`id`) ON DELETE restrict ON UPDATE CASCADE;
+alter table wahlschein add     CONSTRAINT `fk_wahlschein_wahlscheinstatus` FOREIGN KEY (`wahlscheinstatus`) REFERENCES `wahlscheinstatus` (`id`) ON DELETE restrict ON UPDATE CASCADE;
+alter table wahlschein add     CONSTRAINT `fk_wahlschein_abgabetyp` FOREIGN KEY (`abgabetyp`) REFERENCES `abgabetyp` (`id`) ON DELETE restrict ON UPDATE CASCADE;
+alter table wahlschein add     CONSTRAINT `fk_wahlschein_blocknumber` FOREIGN KEY (`blocknumber`) REFERENCES `wahlschein_blocknumbers` (`blocknumber`) ON DELETE restrict ON UPDATE CASCADE;
+*/
 
 CREATE
 OR REPLACE TRIGGER `trigger_wahlschein_bi_defaults` 

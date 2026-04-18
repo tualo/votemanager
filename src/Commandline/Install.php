@@ -276,6 +276,7 @@ class Install extends CommandLineInstallSQL  implements ICommandline
 
 
         'install/data/erweiterte_ds_rechte' => 'setup erweiterte_ds_rechte',
+        'install/ddl/precalc' => 'setup precalc',
 
     ];
 }
