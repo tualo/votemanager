@@ -84,6 +84,11 @@ INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`role`,`table_name`,`wr
 VALUES ('0','0','1','wahl_auszaehlung','kandidaten','0') ;
 
 
+INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
+VALUES ('0','0','1','0','wahl_auszaehlung','stimmzettelgruppen') ;
+INSERT IGNORE INTO `ds_access` (`append`,`delete`,`read`,`write`,`role`,`table_name`) 
+VALUES ('0','0','1','0','wahl_auszaehlung','stimmzettel') ;
+
 insert ignore into route_scopes_permissions (scope,`group`,allowed)
 select scope,'wahl_ruecklauf' `group`,1 allowed from route_scopes 
 where scope ='papervote.return';
