@@ -143,6 +143,9 @@ class Install extends CommandLineInstallSQL  implements ICommandline
         'install/ddl/wahlschein' => 'setup wahlschein',
         'install/ds/wahlschein.ds' => 'setup ds wahlschein',
 
+        'install/ddl/wahlschein_history' => 'setup wahlschein_history',
+
+
 
         'install/ddl/wahlscheinstatus_offline_erlaubt' => 'setup wahlscheinstatus_offline_erlaubt',
         'install/ds/wahlscheinstatus_offline_erlaubt.ds' => 'setup ds wahlscheinstatus_offline_erlaubt',
