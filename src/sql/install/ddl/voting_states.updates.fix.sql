@@ -14,6 +14,8 @@ insert ignore into voting_states (id,name) values
 
 
 
+
+
 CREATE TABLE IF NOT EXISTS `voting_state` (
     id integer(11) NOT NULL,
     constraint check(id = 1),

@@ -1,151 +1,129 @@
-DELIMITER //
+DELIMITER / / CREATE
+OR REPLACE FUNCTION `use_kandidaten_stimmenanzahl_type`() RETURNS varchar(20) DETERMINISTIC BEGIN DECLARE res varchar(20);
 
-
-CREATE  OR REPLACE FUNCTION `use_kandidaten_stimmenanzahl_type`() RETURNS varchar(20)
-    DETERMINISTIC
-BEGIN
-  DECLARE res varchar(20);
-  if @use_kandidaten_stimmenanzahl_type IS NULL THEN
-    select val into res from votemanager_setup where id='wm_report_base';
-  else 
-    set res = @use_kandidaten_stimmenanzahl_type;
-  END IF;
-
-  return res;
-END //
-
-delimiter ;
-
-create or replace view `view_kandidaten_stimmenanzahl` as
-
-
-with basedata_szg as (
+if @use_kandidaten_stimmenanzahl_type IS NULL THEN
 select
-    dense_rank() over (
-        partition by 
-            `stimmzettel`.`id`,
-            `stimmzettelgruppen`.`id`
-        order by
-            
-            ifnull(`kandidaten`.`kooptiert`,0) desc,
-
-            ifnull(`onlinekandidaten`.`anzahl`, 0) 
-            + ifnull(`briefwahlkandidaten`.`briefstimmen`, 0) desc,
-            
-            if(
-                `kandidaten`.`losnummer_stimmzettelgruppe` = 0,
-                1000000,
-                `kandidaten`.`losnummer_stimmzettelgruppe`
-            )
-    ) AS `stimmzettelgruppen_rang`,
-
-
-    `kandidaten`.`id` AS `id`,
-    
-    `kandidaten`.`barcode` AS `barcode`,
-
-    `kandidaten`.`losnummer` AS `losnummer`,
-    `kandidaten`.`losnummer_stimmzettelgruppe` AS `losnummer_stimmzettelgruppe`,
-    `kandidaten`.`kooptiert` AS `kooptiert`,
-
-    `kandidaten`.`stimmzettelgruppen` AS `stimmzettelgruppen`,
-    `stimmzettel`.`name` AS `stimmzettel_name`,
-    `stimmzettelgruppen`.`id` AS `stimmzettelgruppen_id`,
-    `stimmzettel`.`id` AS `stimmzettel_id`,
-    `stimmzettelgruppen`.`name` AS `stimmzettelgruppen_name`,
-    `stimmzettel`.`sitze` AS `stimmzettel_sitze`,
-    
-    `stimmzettelgruppen`.`sitze` AS `stimmzettelgruppen_sitze`,
-    `stimmzettelgruppen`.`mindestsitze` AS `stimmzettelgruppen_mindestsitze`,
-
-    `onlinekandidaten`.`anzahl` AS `onlinestimmen`,
-    `briefwahlkandidaten`.`briefstimmen`AS `offlinestimmen`,
-    `onlinekandidaten`.`anzahl` + `briefwahlkandidaten`.`briefstimmen` AS `gesamtstimmen`,
-
-    onlinestimmzettel.erwartet AS `onlinestimmzettel_erwartet`,
-    onlinestimmzettel.enthaltung AS `onlinestimmzettel_enthaltung`,
-    onlinestimmzettel.ungueltig AS `onlinestimmzettel_ungueltig`,
-    onlinestimmzettel.anzahl AS `onlinestimmzettel_anzahl`,
-    briefwahlstimmzettel.erwartet AS `briefwahlstimmzettel_erwartet`,
-    briefwahlstimmzettel.enthaltung AS `briefwahlstimmzettel_enthaltung`,
-    briefwahlstimmzettel.ungueltig AS `briefwahlstimmzettel_ungueltig`,
-    briefwahlstimmzettel.anzahl AS `briefwahlstimmzettel_anzahl`,
-
-    kandidaten.vorname AS vorname,
-    kandidaten.nachname AS nachname,
-    kandidaten.titel AS titel,
-    trim(concat(
-        kandidaten.titel,
-        ' ',
-        kandidaten.vorname,
-        ' ',
-        kandidaten.nachname
-    )) AS anzeige_name
+    val into res
 from
-    (
+    votemanager_setup
+where
+    id = 'wm_report_base';
+
+else
+set
+    res = @use_kandidaten_stimmenanzahl_type;
+
+END IF;
+
+return res;
+
+END / / delimiter;
+
+create
+or replace view `view_kandidaten_stimmenanzahl` as with basedata_szg as (
+    select
+        dense_rank() over (
+            partition by `stimmzettel`.`id`,
+            `stimmzettelgruppen`.`id`
+            order by
+                ifnull(`kandidaten`.`kooptiert`, 0) desc,
+                ifnull(`onlinekandidaten`.`anzahl`, 0) + ifnull(`briefwahlkandidaten`.`briefstimmen`, 0) desc,
+                if(
+                    `kandidaten`.`losnummer_stimmzettelgruppe` = 0,
+                    1000000,
+                    `kandidaten`.`losnummer_stimmzettelgruppe`
+                )
+        ) AS `stimmzettelgruppen_rang`,
+        `kandidaten`.`id` AS `id`,
+        `kandidaten`.`barcode` AS `barcode`,
+        `kandidaten`.`losnummer` AS `losnummer`,
+        `kandidaten`.`losnummer_stimmzettelgruppe` AS `losnummer_stimmzettelgruppe`,
+        `kandidaten`.`kooptiert` AS `kooptiert`,
+        `kandidaten`.`stimmzettelgruppen` AS `stimmzettelgruppen`,
+        `stimmzettel`.`name` AS `stimmzettel_name`,
+        `stimmzettelgruppen`.`id` AS `stimmzettelgruppen_id`,
+        `stimmzettel`.`id` AS `stimmzettel_id`,
+        `stimmzettelgruppen`.`name` AS `stimmzettelgruppen_name`,
+        `stimmzettel`.`sitze` AS `stimmzettel_sitze`,
+        `stimmzettelgruppen`.`sitze` AS `stimmzettelgruppen_sitze`,
+        `stimmzettelgruppen`.`mindestsitze` AS `stimmzettelgruppen_mindestsitze`,
+        `onlinekandidaten`.`anzahl` AS `onlinestimmen`,
+        `briefwahlkandidaten`.`briefstimmen` AS `offlinestimmen`,
+        `onlinekandidaten`.`anzahl` + `briefwahlkandidaten`.`briefstimmen` AS `gesamtstimmen`,
+        onlinestimmzettel.erwartet AS `onlinestimmzettel_erwartet`,
+        onlinestimmzettel.enthaltung AS `onlinestimmzettel_enthaltung`,
+        onlinestimmzettel.ungueltig AS `onlinestimmzettel_ungueltig`,
+        onlinestimmzettel.anzahl AS `onlinestimmzettel_anzahl`,
+        briefwahlstimmzettel.erwartet AS `briefwahlstimmzettel_erwartet`,
+        briefwahlstimmzettel.enthaltung AS `briefwahlstimmzettel_enthaltung`,
+        briefwahlstimmzettel.ungueltig AS `briefwahlstimmzettel_ungueltig`,
+        briefwahlstimmzettel.anzahl AS `briefwahlstimmzettel_anzahl`,
+        kandidaten.vorname AS vorname,
+        kandidaten.nachname AS nachname,
+        kandidaten.titel AS titel,
+        trim(
+            concat(
+                ifnull(kandidaten.titel, ''),
+                ' ',
+                kandidaten.vorname,
+                ' ',
+                kandidaten.nachname
+            )
+        ) AS anzeige_name
+    from
         (
             (
                 (
-                    `kandidaten`
-                    join `stimmzettelgruppen` on(
-                        `kandidaten`.`stimmzettelgruppen` = `stimmzettelgruppen`.`id`
+                    (
+                        `kandidaten`
+                        join `stimmzettelgruppen` on(
+                            `kandidaten`.`stimmzettelgruppen` = `stimmzettelgruppen`.`id`
+                        )
+                    )
+                    join `stimmzettel` on(
+                        `stimmzettelgruppen`.`stimmzettel` = `stimmzettel`.`id`
                     )
                 )
-                join `stimmzettel` on(
-                    `stimmzettelgruppen`.`stimmzettel` = `stimmzettel`.`id`
+                join `onlinekandidaten` on(
+                    `onlinekandidaten`.`id` = `kandidaten`.`id`
                 )
             )
-            join `onlinekandidaten` on(
-                `onlinekandidaten`.`id` = `kandidaten`.`id`
+            join `briefwahlkandidaten` on(
+                `briefwahlkandidaten`.`id` = `kandidaten`.`id`
+            )
+            join `briefwahlstimmzettel` on(
+                `stimmzettel`.`id` = `briefwahlstimmzettel`.`stimmzettel`
+            )
+            join `onlinestimmzettel` on(
+                `stimmzettel`.`id` = `onlinestimmzettel`.`stimmzettel`
             )
         )
-        join `briefwahlkandidaten` on(
-            `briefwahlkandidaten`.`id` = `kandidaten`.`id`
-        )
-        join `briefwahlstimmzettel` on(
-            `stimmzettel`.`id` = `briefwahlstimmzettel`.`stimmzettel`
-        )
-        join `onlinestimmzettel` on(
-            `stimmzettel`.`id` = `onlinestimmzettel`.`stimmzettel`
-        )
-    )
-order by
-    `onlinekandidaten`.`anzahl` + `briefwahlkandidaten`.`briefstimmen` desc
-), basedata as (
-    select 
+    order by
+        `onlinekandidaten`.`anzahl` + `briefwahlkandidaten`.`briefstimmen` desc
+),
+basedata as (
+    select
         stimmzettel_id,
-            
         dense_rank() over (
-            partition by 
-
-                stimmzettel_id
-            
+            partition by stimmzettel_id
             order by
-
                 kooptiert desc,
-
-
                 if (
-                    `stimmzettelgruppen_rang` <=  `stimmzettelgruppen_mindestsitze`,
+                    `stimmzettelgruppen_rang` <= `stimmzettelgruppen_mindestsitze`,
                     1,
                     0
                 ) desc,
-
-
                 onlinestimmen + offlinestimmen desc,
-
                 if(
                     `losnummer_stimmzettelgruppe` = 0,
                     2000000,
                     `losnummer_stimmzettelgruppe`
                 ),
-
                 if(
                     `losnummer` = 0,
                     1000000,
                     `losnummer`
                 )
-
         ) AS `stimmzettel_rang`,
         stimmzettel_name,
         stimmzettel_sitze,
@@ -159,11 +137,9 @@ order by
         losnummer_stimmzettelgruppe,
         kooptiert,
         stimmzettelgruppen_mindestsitze,
-
         onlinestimmen,
         offlinestimmen,
         gesamtstimmen,
-
         onlinestimmzettel_erwartet,
         onlinestimmzettel_enthaltung,
         onlinestimmzettel_ungueltig,
@@ -176,71 +152,92 @@ order by
         nachname,
         titel,
         anzeige_name
-    from basedata_szg
-)
-
-
-, 
-
+    from
+        basedata_szg
+),
 setup as (
-    select use_kandidaten_stimmenanzahl_type() as val
-
-), predata as (
-    select 
+    select
+        use_kandidaten_stimmenanzahl_type() as val
+),
+predata as (
+    select
         setup.val,
         stimmzettel_id use_id,
         stimmzettel_rang use_rang,
         stimmzettel_name use_name,
         stimmzettel_sitze use_sitze,
-
-        row_number() over (partition by stimmzettel_id order by barcode) listenplatz,
-        
-        rank() over (partition by stimmzettel_id order by stimmzettel_rang) rn,
-        rank() over (partition by stimmzettel_id order by stimmzettel_rang)<=stimmzettel_sitze as gewaehlt,
+        row_number() over (
+            partition by stimmzettel_id
+            order by
+                barcode
+        ) listenplatz,
+        rank() over (
+            partition by stimmzettel_id
+            order by
+                stimmzettel_rang
+        ) rn,
+        rank() over (
+            partition by stimmzettel_id
+            order by
+                stimmzettel_rang
+        ) <= stimmzettel_sitze as gewaehlt,
         basedata.*
-    from basedata join setup on   
-    
-        setup.val='stimmzettel'
-
-    union all 
-        
-    select 
+    from
+        basedata
+        join setup on setup.val = 'stimmzettel'
+    union
+    all
+    select
         setup.val,
         stimmzettelgruppen_id use_id,
         stimmzettelgruppen_rang use_rang,
         stimmzettelgruppen_name use_name,
         stimmzettelgruppen_sitze use_sitze,
-
-        row_number() over (partition by stimmzettelgruppen_id order by barcode) listenplatz,
-
-        rank() over (partition by stimmzettelgruppen_id order by stimmzettelgruppen_rang) rn,
-        rank() over (partition by stimmzettelgruppen_id order by stimmzettelgruppen_rang)<=stimmzettelgruppen_sitze as gewaehlt,
+        row_number() over (
+            partition by stimmzettelgruppen_id
+            order by
+                barcode
+        ) listenplatz,
+        rank() over (
+            partition by stimmzettelgruppen_id
+            order by
+                stimmzettelgruppen_rang
+        ) rn,
+        rank() over (
+            partition by stimmzettelgruppen_id
+            order by
+                stimmzettelgruppen_rang
+        ) <= stimmzettelgruppen_sitze as gewaehlt,
         basedata.*
-    from basedata join setup on   setup.val='stimmzettelgruppen'
-), 
-
+    from
+        basedata
+        join setup on setup.val = 'stimmzettelgruppen'
+),
 finalcheck as (
-    select 
+    select
         use_id,
         is_final
-    from (
-        select 
-            0 is_final,
-            use_id,
-            use_rang,
-            count(*) as cnt
-        from predata
-        group by use_id,use_rang
-        having cnt > 1
-    ) x group by use_id
+    from
+        (
+            select
+                0 is_final,
+                use_id,
+                use_rang,
+                count(*) as cnt
+            from
+                predata
+            group by
+                use_id,
+                use_rang
+            having
+                cnt > 1
+        ) x
+    group by
+        use_id
 )
-
-select 
+select
     ifnull(finalcheck.is_final, 1) as is_final,
-    predata.* 
-from 
+    predata.*
+from
     predata
-    left join 
-    finalcheck
-    on predata.use_id = finalcheck.use_id 
-
+    left join finalcheck on predata.use_id = finalcheck.use_id
