@@ -72,6 +72,7 @@ basedata as (
             and involvement_filter(wahlbeteiligung_pivot_datatable.json_values)
         join stimmzettel 
                 on stimmzettel.id = wahlschein.stimmzettel
+                and involvement_votetype_filter(stimmzettel.wahltyp)
         join setup on   setup.val='stimmzettel'
         join testdata on   testdata.use_testdata = wahlschein.testdaten
         
@@ -97,6 +98,7 @@ basedata as (
         join briefwahlstimmzettel 
         join stimmzettel 
                 on stimmzettel.id = briefwahlstimmzettel.stimmzettel
+                and involvement_votetype_filter(stimmzettel.wahltyp)
         
         join setup on   setup.val='stimmzettel' 
     union all
@@ -122,6 +124,7 @@ basedata as (
             and involvement_filter(wahlbeteiligung_pivot_datatable.json_values)
         join stimmzettel 
                 on stimmzettel.id = wahlschein.stimmzettel
+                and involvement_votetype_filter(stimmzettel.wahltyp)
         join stimmzettelgruppen
                 on stimmzettelgruppen.stimmzettel = stimmzettel.id
         join (
@@ -157,6 +160,7 @@ basedata as (
         join briefwahlstimmzettel 
         join stimmzettel 
                 on stimmzettel.id = briefwahlstimmzettel.stimmzettel
+                and involvement_votetype_filter(stimmzettel.wahltyp)
         join stimmzettelgruppen
                 on stimmzettelgruppen.stimmzettel = stimmzettel.id
         join (
@@ -187,6 +191,7 @@ basedata as (
             and involvement_filter(wahlbeteiligung_pivot_datatable.json_values)
         join stimmzettel 
                 on stimmzettel.id = wahlschein.stimmzettel
+                and involvement_votetype_filter(stimmzettel.wahltyp)
         join wahlgruppe
                 on wahlgruppe.id = stimmzettel.wahlgruppe
         join setup on   setup.val='wahlgruppe'
@@ -214,6 +219,7 @@ basedata as (
             and involvement_filter(wahlbeteiligung_pivot_datatable.json_values)
         join stimmzettel 
                 on stimmzettel.id = wahlschein.stimmzettel
+                and involvement_votetype_filter(stimmzettel.wahltyp)
         join wahlbezirk
                 on wahlbezirk.id = stimmzettel.wahlbezirk
         join setup on   setup.val='wahlbezirk'

@@ -8,6 +8,7 @@ BEGIN
     set keyname = 0;
   END IF;
 
+
   if @involvement_filter_id IS not NULL THEN
     set keyname = @involvement_filter_id;
   END IF;
@@ -23,6 +24,12 @@ BEGIN
   RETURN lvl;
 END //
 
+CREATE  OR REPLACE FUNCTION `get_involvement_filter_id`() RETURNS INTEGER
+    DETERMINISTIC
+
+BEGIN
+  RETURN @involvement_filter_id;
+END //
  
 CREATE  OR REPLACE FUNCTION `involvement_votetype_filter`(wahltyp integer) RETURNS BOOLEAN
     DETERMINISTIC
