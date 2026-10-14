@@ -1,0 +1,152 @@
+extends printable_page
+block append config
+    - pageTitle="Auszählung | Hochrechnung"
+    - pageOrientation="portrait"
+    - var timechart_user_performance = dstable('timechart_user_performance').s('letzte_stunde','desc').s('ausgezaehlt','desc').g()
+    - var timechart = dstable('timechart').g()
+    - var overview = count(timechart) > 0 ? timechart[0] : null
+    - var expected = overview ? intval(overview.erwartet) : 0
+    - var counted = overview ? intval(overview.ausgezaehlt) : 0
+    - var openCount = overview ? intval(overview.offen) : 0
+    - var progressPercent = expected > 0 ? min(100, round(counted / expected * 1000) / 10) : 0
+    - var maxLastHour = 1
+    each performanceRow in timechart_user_performance
+        - maxLastHour = max(maxLastHour, intval(performanceRow.letzte_stunde))
+
+block pageheader
+    .running-header
+        span.running-brand WAHL | AUSZÄHLUNG
+        span.running-label Hochrechnung und Teamleistung
+
+block pagefooter
+    .running-footer
+        span Auszählung | Interner Überblick
+        span= date('d.m.Y H:i')
+
+block append css
+    style.
+        :root {
+            --ink: #172b3a;
+            --muted: #657985;
+            --line: #d8e1e5;
+            --paper: #ffffff;
+            --wash: #eef4f3;
+            --teal: #087e78;
+            --lime: #c5d94a;
+            --coral: #dd654b;
+        }
+        * { box-sizing: border-box; }
+        body { color: var(--ink); font-family: DejaVu Sans, sans-serif; font-size: 9pt; }
+        .running-header, .running-footer { display: flex; justify-content: space-between; color: var(--muted); font-size: 8pt; }
+        .running-header { border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+        .running-brand { color: var(--teal); font-weight: bold; }
+        .running-footer { border-top: 1px solid var(--line); padding-top: 6px; }
+        .content { padding: 8mm 0; }
+        .eyebrow { margin: 0 0 4px; color: var(--teal); font-size: 8pt; font-weight: bold; text-transform: uppercase; }
+        h1 { margin: 0; font-size: 23pt; line-height: 1.15; }
+        .intro { margin: 7px 0 20px; color: var(--muted); font-size: 10pt; }
+        .progress-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+        .progress-head strong { font-size: 12pt; }
+        .progress-value { color: var(--teal); font-weight: bold; }
+        .progress-track { height: 11px; overflow: hidden; background: var(--wash); border: 1px solid var(--line); }
+        .progress-fill { height: 100%; background: var(--teal); }
+        .progress-foot { display: flex; justify-content: space-between; margin-top: 5px; color: var(--muted); font-size: 8pt; }
+        .metrics { display: table; width: 100%; margin: 16px 0 22px; border-collapse: separate; border-spacing: 6px 0; table-layout: fixed; }
+        .metric { display: table-cell; width: 25%; padding: 10px 11px; background: var(--wash); border-top: 3px solid var(--teal); vertical-align: top; }
+        .metric:nth-child(2) { border-top-color: var(--lime); }
+        .metric:nth-child(3) { border-top-color: var(--coral); }
+        .metric:nth-child(4) { border-top-color: var(--ink); }
+        .metric-label { display: block; margin-bottom: 4px; color: var(--muted); font-size: 8pt; }
+        .metric-value { display: block; font-size: 17pt; font-weight: bold; }
+        .metric-unit { display: block; margin-top: 2px; color: var(--muted); font-size: 7.5pt; }
+        .section-heading { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 8px; padding-bottom: 6px; border-bottom: 2px solid var(--ink); }
+        h2 { margin: 0; font-size: 14pt; }
+        .section-note { color: var(--muted); font-size: 8pt; }
+        table.performance { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        .performance th { padding: 7px 6px; background: var(--ink); color: white; font-size: 7.5pt; font-weight: bold; text-align: left; }
+        .performance td { padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: middle; overflow-wrap: anywhere; }
+        .performance tbody tr:nth-child(even) { background: #f5f8f7; }
+        .performance .rank { width: 6%; color: var(--muted); }
+        .performance .user { width: 21%; font-weight: bold; }
+        .performance .count { width: 12%; text-align: right; font-variant-numeric: tabular-nums; }
+        .performance .recent { width: 22%; }
+        .performance .time { width: 15%; color: var(--muted); font-size: 7pt; }
+        .performance .rate { width: 12%; text-align: right; font-weight: bold; font-variant-numeric: tabular-nums; }
+        .mini-track { height: 5px; margin-top: 4px; background: var(--line); }
+        .mini-fill { height: 100%; background: var(--teal); }
+        .empty { padding: 24px 12px; border: 1px dashed var(--line); color: var(--muted); text-align: center; }
+        .method-note { margin-top: 12px; color: var(--muted); font-size: 7.5pt; }
+        @media print {
+            .metric, .performance th, .progress-fill, .mini-fill { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+            .section-heading, .metrics, table.performance { break-inside: avoid; }
+        }
+
+block pagecontent
+    .content
+        p.eyebrow Wahlauszählung
+        h1 Hochrechnung
+        p.intro Fortschritt der Stimmzettelerfassung und Leistung je Erfasser
+
+        if overview
+            .progress-head
+                strong Gesamtfortschritt
+                span.progress-value= number_format(progressPercent, 1, ',', '.') + ' %'
+            .progress-track
+                .progress-fill(style='width:' + progressPercent + '%')
+            .progress-foot
+                span= number_format(counted, 0, ',', '.') + ' von ' + number_format(expected, 0, ',', '.') + ' erfasst'
+                span= number_format(openCount, 0, ',', '.') + ' offen'
+
+            .metrics
+                .metric
+                    span.metric-label Sollmenge
+                    span.metric-value= number_format(expected, 0, ',', '.')
+                    span.metric-unit Stimmzettel
+                .metric
+                    span.metric-label Ausgezählt
+                    span.metric-value= number_format(counted, 0, ',', '.')
+                    span.metric-unit gültig erfasste Stimmzettel
+                .metric
+                    span.metric-label Noch offen
+                    span.metric-value= number_format(openCount, 0, ',', '.')
+                    span.metric-unit bis zur Sollmenge
+                .metric
+                    span.metric-label Voraussichtliches Ende
+                    span.metric-value= overview.prognose_ende ? overview.prognose_ende : 'Noch keine Prognose'
+                    span.metric-unit= overview.stimmzettel_pro_stunde ? number_format(floatval(overview.stimmzettel_pro_stunde), 2, ',', '.') + ' Stimmzettel pro Stunde' : 'Rate noch nicht messbar'
+        else
+            .empty Keine Hochrechnungsdaten vorhanden.
+
+        .section-heading
+            h2 Leistung je Erfasser
+            if count(timechart_user_performance) > 0
+                span.section-note= count(timechart_user_performance) + ' Erfasser'
+
+        if count(timechart_user_performance) > 0
+            table.performance
+                thead
+                    tr
+                        th.rank Rang
+                        th.user Erfasser
+                        th.count Gesamt
+                        th.recent Letzte Stunde
+                        th.time Zuletzt
+                        th.rate Schnitt / h
+                tbody
+                    each user, index in timechart_user_performance
+                        - var recentCount = intval(user.letzte_stunde)
+                        - var recentWidth = round(recentCount / maxLastHour * 100)
+                        tr
+                            td.rank= sprintf('%02d', index + 1)
+                            td.user= user.login ? user.login : 'Unbekannt'
+                            td.count= number_format(intval(user.ausgezaehlt), 0, ',', '.')
+                            td.recent
+                                span= number_format(recentCount, 0, ',', '.')
+                                .mini-track
+                                    .mini-fill(style='width:' + recentWidth + '%')
+                            td.time= user.letzte_zaehlung ? user.letzte_zaehlung : '-'
+                            td.rate= user.durchschnitt_pro_stunde ? number_format(floatval(user.durchschnitt_pro_stunde), 2, ',', '.') : '-'
+        else
+            .empty Noch keine Stimmzettel pro Erfasser erfasst.
+
+        p.method-note Die Gesamtprognose basiert auf der rollierenden Aktivität der letzten 15 Minuten und erscheint erst nach einem vollständigen 15-Minuten-Anlaufzeitraum. Die Rate je Erfasser basiert auf dem Zeitraum zwischen der ersten und letzten gültigen Erfassung. Die Letzte-Stunde-Spalte zeigt die Aktivität im rollierenden 60-Minuten-Fenster.
