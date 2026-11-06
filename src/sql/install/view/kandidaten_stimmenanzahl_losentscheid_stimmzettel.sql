@@ -13,7 +13,9 @@ select
     gesamtstimmen,
 
     if (
-        min(rn) <= use_sitze and max(rn) > use_sitze,
+        -- min(rn) <= use_sitze and max(rn) > use_sitze,
+        -- ToDo: Prüfen, ob Einzugslosung korrekt erkannt wird
+        min(rn) = use_sitze and max(rn) = use_sitze,
         'Einzugslosung',
         if (
             min(rn) > use_sitze and max(rn) > use_sitze,
