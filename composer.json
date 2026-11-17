@@ -21,7 +21,7 @@
   "require": {
     "phpseclib/phpseclib": "^4.0.3",
     "tualo/pug-printable-page": "^1.1",
-    "tualo/server": "^1.0"
+    "tualo/server": ">1.0.12"
   },
-  "version": "1.1.85"
+  "version": "1.1.86"
 }
